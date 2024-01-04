@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\queryprocessing">
+      <UniqueIdentifier>{a530c403-3291-4ca6-be07-e3362af0361c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\common">
+      <UniqueIdentifier>{0b227740-8726-47b0-b2f1-419e3f99604a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\expressions">
+      <UniqueIdentifier>{9a408495-c5d2-4e7c-82a9-af253e132a01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\storageengine">
+      <UniqueIdentifier>{9e88adcb-4819-421d-99ce-b08d534df2a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\interfaces">
+      <UniqueIdentifier>{d74381a0-890b-4961-b0a4-41c9e2b69cd0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="queryprocessing\operators.h">
+      <Filter>Headerdateien\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="common\value.h">
+      <Filter>Headerdateien\common</Filter>
+    </ClInclude>
+    <ClInclude Include="expressions\expressions.h">
+      <Filter>Headerdateien\expressions</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\iexpression.h">
+      <Filter>Headerdateien\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\ioperator.h">
+      <Filter>Headerdateien\interfaces</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="server\main.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\operators.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
