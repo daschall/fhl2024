@@ -2,12 +2,14 @@
 
 #include "queryprocessing/operators.h"
 #include "expressions/expressions.h"
+#include "common/helper.h"
 
 int main()
 {
     // Create a value array to hold data.
     //
-    Value rgvals[3];
+    const int nCols = 3;
+    Value rgvals[nCols] = {};
     rgvals[2] = 10;
     
     // col0 < 10
@@ -32,7 +34,7 @@ int main()
     root->Open();
     while (root->GetRow(rgvals))
     {
-        std::cout << "Got a row, value: " << rgvals[0] << '\n';
+        DumpValues(std::cout, rgvals, nCols);
     }
     root->Close();
 }
