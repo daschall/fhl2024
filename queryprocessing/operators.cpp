@@ -2,6 +2,35 @@
 
 namespace Qp
 {
+	RowGenerator::RowGenerator(Value min, Value max, Value step)
+		: min(min)
+		, max(max)
+		, step(step)
+		, cur(min)
+	{}
+
+	void RowGenerator::Open()
+	{
+		cur = min;
+	}
+
+	bool RowGenerator::GetRow(Value* rgvals)
+	{
+		if (cur <= max)
+		{
+			rgvals[0] = cur;
+			cur += step;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	void RowGenerator::Close()
+	{}
+
 	BTreeScanner::BTreeScanner()
 	{
 	}

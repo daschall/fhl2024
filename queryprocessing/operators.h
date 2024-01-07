@@ -7,37 +7,18 @@
 
 namespace Qp
 {
+	// This operator generates values between [min..max] at step interval.
+	//
 	class RowGenerator : public IOperator
 	{
 	public:
-		RowGenerator(Value min, Value max, Value step)
-		: min(min)
-		, max(max)
-		, step(step)
-		, cur(0)
-		{}
+		RowGenerator(Value min, Value max, Value step);
 
-		void Open() override
-		{
-			cur = 0;
-		}
+		void Open() override;
 
-		bool GetRow(Value* rgvals) override
-		{
-			if (cur < max)
-			{
-				rgvals[0] = cur;
-				cur+=step;
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
+		bool GetRow(Value* rgvals) override;
 
-		void Close() override
-		{}
+		void Close() override;
 
 	private:
 		Value cur;
