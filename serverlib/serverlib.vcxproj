@@ -143,13 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common\value.h" />
-    <ClInclude Include="expressions\expressions.h" />
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
     <ClInclude Include="queryprocessing\operators.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="expressions\expressions.cpp" />
+    <ClCompile Include="queryprocessing\aggregate.cpp" />
     <ClCompile Include="queryprocessing\join.cpp" />
     <ClCompile Include="queryprocessing\operators.cpp" />
     <ClCompile Include="server\main.cpp" />

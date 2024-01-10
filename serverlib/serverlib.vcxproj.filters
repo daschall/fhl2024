@@ -19,9 +19,6 @@
     <Filter Include="Headerdateien\common">
       <UniqueIdentifier>{0b227740-8726-47b0-b2f1-419e3f99604a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\expressions">
-      <UniqueIdentifier>{9a408495-c5d2-4e7c-82a9-af253e132a01}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\storageengine">
       <UniqueIdentifier>{9e88adcb-4819-421d-99ce-b08d534df2a6}</UniqueIdentifier>
     </Filter>
@@ -36,13 +33,10 @@
     <ClInclude Include="common\value.h">
       <Filter>Headerdateien\common</Filter>
     </ClInclude>
-    <ClInclude Include="expressions\expressions.h">
-      <Filter>Headerdateien\expressions</Filter>
-    </ClInclude>
-    <ClInclude Include="interfaces\iexpression.h">
+    <ClInclude Include="interfaces\ioperator.h">
       <Filter>Headerdateien\interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="interfaces\ioperator.h">
+    <ClInclude Include="interfaces\iexpression.h">
       <Filter>Headerdateien\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,10 +47,10 @@
     <ClCompile Include="queryprocessing\operators.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="expressions\expressions.cpp">
+    <ClCompile Include="queryprocessing\join.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="queryprocessing\join.cpp">
+    <ClCompile Include="queryprocessing\aggregate.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

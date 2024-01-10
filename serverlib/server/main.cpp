@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "queryprocessing/operators.h"
-#include "expressions/expressions.h"
 #include "common/helper.h"
 
 int main()
@@ -14,7 +13,7 @@ int main()
     
     // col0 < 10
     //
-    Comparison<ComparisonType::LE> cmp(0, 2);
+    auto cmp = [](Value* rgvals) { return rgvals[0] == 10; };
 
     // Generate rows from 0 to 100.
     //
@@ -22,7 +21,7 @@ int main()
 
     // Filter using above expression.
     //
-    Qp::Filter filter(&scanner, &cmp);
+    Qp::Filter filter(&scanner, cmp);
 
     // Root of the query is the filter.
     //

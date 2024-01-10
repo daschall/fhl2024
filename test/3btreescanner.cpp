@@ -14,10 +14,13 @@ TEST(BTreeScannerQpTestSuite, Scanner1)
 
 	Value numRows = 0;
 
+	scanner.Open();
 	while (scanner.GetRow(rgvals))
 	{
 		++numRows;
 		EXPECT_EQ(numRows, rgvals[0]);
 	}
-  EXPECT_EQ(100, numRows);
+	scanner.Close();
+
+	EXPECT_EQ(100, numRows);
 }

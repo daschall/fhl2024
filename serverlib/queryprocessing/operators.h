@@ -3,8 +3,6 @@
 #include "interfaces/ioperator.h"
 #include "interfaces/iexpression.h"
 
-#include <vector>
-
 namespace Qp
 {
 	// This operator generates values between [min..max] at step interval.
@@ -12,7 +10,7 @@ namespace Qp
 	class RowGenerator : public IOperator
 	{
 	public:
-		RowGenerator(Value min, Value max, Value step);
+		RowGenerator(Value min, Value max, Value step, unsigned int repeat = 1);
 
 		void Open() override;
 
@@ -25,6 +23,9 @@ namespace Qp
 		Value max;
 		Value min;
 		Value step;
+		unsigned int repeat;
+
+		unsigned int repeatCounter;
 	};
 
 	class BTreeScanner : public IOperator
@@ -46,21 +47,21 @@ namespace Qp
 	class Filter : public IOperator
 	{
 	public:
-		Filter(IOperator *child, IExpression* expr);
+		Filter(IOperator *child, BooleanExpression expr);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
 		void Close() override;
 
 	private:
-		IExpression* expr;
 		IOperator* child;
+		BooleanExpression expr;
 	};
 
 	class Project : public IOperator
 	{
 	public:
-		Project(IOperator* child);
+		Project(IOperator* child, Expression expr);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
@@ -68,6 +69,7 @@ namespace Qp
 
 	private:
 		IOperator* child;
+		Expression expr;
 	};
 	
 	// This operator joins rows from two inputs on two given columns.
@@ -81,7 +83,7 @@ namespace Qp
 	class Join : public IOperator
 	{
 	public:
-		Join(IOperator* left, IOperator* right, unsigned int clvals, unsigned int rcvals, unsigned int lcol, unsigned int rcol);
+		Join(IOperator* left, IOperator* right, unsigned int clvals, unsigned int rcvals, JoinExpression expr);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
@@ -92,10 +94,34 @@ namespace Qp
 		IOperator* right;
 		unsigned int clvals;
 		unsigned int crvals;
-		unsigned int lcol;
-		unsigned int rcol;
+		JoinExpression expr;
 		Value* lvals;
 		Value* rvals;
+
+		bool gotlrow;
+		bool ropen;
 	};
 
+	// An aggregate aggregates rows using the aggregateExpr
+	// grouped by the column value in the matchColumn.
+	// A stream aggregate requires the rows to be sorted on matchColumn.
+	//
+	class StreamAggregate : public IOperator
+	{
+	public:
+		StreamAggregate(IOperator* child, unsigned int nvalsChild, unsigned int groupByColumn, AggregateExpression aggExpression);
+
+		void Open() override;
+		bool GetRow(Value* rgvals) override;
+		void Close() override;
+
+	private:
+		IOperator* child;
+		Value* rgvalsChild;
+		unsigned int nvals;
+		unsigned int groupByColumn;
+		AggregateExpression aggExpression;
+		bool pendingChildRow;
+		bool childDone;
+	};
 }

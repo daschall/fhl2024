@@ -3,28 +3,27 @@
 */
 
 #include "pch.h"
-#include <expressions/expressions.h>
 
 // Tests that the filter only returns rows equal to 5
 //
 TEST(FilterQpTestSuite, Filter1)
 {
-	Value rgvals[2];
-	rgvals[1] = 5;
-
-	Comparison<ComparisonType::EQ> cmp(0, 1);
+	Value rgvals[1];
 
 	Qp::RowGenerator rowGen(0, 10, 1);
-	Qp::Filter filter(&rowGen, &cmp);
+	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] == 5; });
 
 	Value numRows = 0;
 
+	filter.Open();
 	while (filter.GetRow(rgvals))
 	{
 		++numRows;
 		EXPECT_EQ(5, rgvals[0]);
 	}
-  EXPECT_EQ(1, numRows);
+	filter.Close();
+
+	EXPECT_EQ(1, numRows);
 }
 
 
@@ -32,21 +31,21 @@ TEST(FilterQpTestSuite, Filter1)
 //
 TEST(FilterQpTestSuite, Filter2)
 {
-	Value rgvals[2];
-	rgvals[1] = 5;
-
-	Comparison<ComparisonType::GT> cmp(0, 1);
+	Value rgvals[1];
 
 	Qp::RowGenerator rowGen(0, 10, 1);
-	Qp::Filter filter(&rowGen, &cmp);
+	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] > 5; });
 
 	Value numRows = 0;
 
+	filter.Open();
 	while (filter.GetRow(rgvals))
 	{
 		++numRows;
 		EXPECT_EQ(5 + numRows, rgvals[0]);
 	}
+	filter.Close();
+
 	EXPECT_EQ(5, numRows);
 }
 
@@ -55,19 +54,19 @@ TEST(FilterQpTestSuite, Filter2)
 TEST(FilterQpTestSuite, Filter3)
 {
 	Value rgvals[2];
-	rgvals[1] = 999;
-
-	Comparison<ComparisonType::EQ> cmp(0, 1);
 
 	Qp::RowGenerator rowGen(0, 10, 1);
-	Qp::Filter filter(&rowGen, &cmp);
+	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] == 999; });
 
 	Value numRows = 0;
 
+	filter.Open();
 	while (filter.GetRow(rgvals))
 	{
 		++numRows;
 		FAIL("Should not have returned a row");
 	}
+	filter.Close();
+
 	EXPECT_EQ(0, numRows);
 }

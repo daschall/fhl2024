@@ -1,21 +1,21 @@
 #include "operators.h"
 
+#include <algorithm>
+
 namespace Qp
 {
-	Join::Join(IOperator* left, IOperator* right, unsigned int clvals, unsigned int crvals, unsigned int lcol, unsigned int rcol)
+	Join::Join(IOperator* left, IOperator* right, unsigned int clvals, unsigned int crvals, JoinExpression expr)
 		: left(left)
 		, right(right)
 		, clvals(clvals)
 		, crvals(crvals)
-		, lcol(lcol)
-		, rcol(rcol)
+		, expr(expr)
+		, gotlrow(false)
+		, ropen(false)
 	{
 		lvals = new Value[clvals];
 		rvals = new Value[crvals];
 	}
-
-	bool gotlrow = false;
-	bool ropen = false;
 
 	void Join::Open()
 	{
@@ -28,6 +28,7 @@ namespace Qp
 		{
 			if (!gotlrow)
 			{
+				std::copy(rgvals, rgvals + clvals, lvals);
 				gotlrow = left->GetRow(lvals);
 
 				if (!gotlrow)
@@ -41,6 +42,7 @@ namespace Qp
 			if (!ropen)
 			{
 				right->Open();
+				std::copy(rgvals + clvals, rgvals + clvals + crvals, rvals);
 				ropen = true;
 			}
 
@@ -48,7 +50,7 @@ namespace Qp
 			{
 				// Got a row from left and right, join.
 				//
-				if (lvals[lcol] == rvals[rcol])
+				if (expr(lvals, rvals))
 				{
 					// We found matching rows, copy to output.
 					//

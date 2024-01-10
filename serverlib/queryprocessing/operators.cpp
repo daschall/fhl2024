@@ -2,16 +2,18 @@
 
 namespace Qp
 {
-	RowGenerator::RowGenerator(Value min, Value max, Value step)
+	RowGenerator::RowGenerator(Value min, Value max, Value step, unsigned int repeat)
 		: min(min)
 		, max(max)
 		, step(step)
 		, cur(min)
+		, repeat(repeat)
 	{}
 
 	void RowGenerator::Open()
 	{
 		cur = min;
+		repeatCounter = 1;
 	}
 
 	bool RowGenerator::GetRow(Value* rgvals)
@@ -19,6 +21,14 @@ namespace Qp
 		if (cur <= max)
 		{
 			rgvals[0] = cur;
+
+			if (repeatCounter < repeat)
+			{
+				++repeatCounter;
+				return true;
+			}
+
+			repeatCounter = 1;
 			cur += step;
 			return true;
 		}
@@ -47,7 +57,7 @@ namespace Qp
 	{}
 
 
-	Filter::Filter(IOperator* child, IExpression* expr)
+	Filter::Filter(IOperator* child, BooleanExpression expr)
 		: child(child)
 		, expr(expr)
 	{
@@ -67,7 +77,7 @@ namespace Qp
 				return false;
 			}
 
-			if (expr->Eval(rgvals))
+			if (expr(rgvals))
 			{
 				return true;
 			}
