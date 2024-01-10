@@ -2,6 +2,9 @@
 
 #include "interfaces/iexpression.h"
 
+// Adds two row values and stores the result in a(nother) value.
+// Note that all three columns can be the same.
+//
 class Addition : public IExpression
 {
 public:
@@ -34,17 +37,34 @@ enum class ComparisonType
 	NE
 };
 
+// Compares two row values and returns the result.
+// Optionally stores the result in another column.
+//
 template<ComparisonType CMP>
 class Comparison : public IExpression
 {
 public:
-	Comparison(unsigned int lhs, unsigned int rhs)
+	Comparison(unsigned int lhs, unsigned int rhs, unsigned int result = -1)
 		: lhs(lhs)
 		, rhs(rhs)
+		, result(result)
 	{
 	}
 
 	bool Eval(Value* rgvals) override
+	{
+		bool res = InternalEval(rgvals);
+
+		if (result != -1)
+		{
+			rgvals[result] = res;
+		}
+
+		return res;
+	}
+
+private:
+	bool InternalEval(Value* rgvals)
 	{
 		if constexpr (CMP == ComparisonType::LT)
 		{
@@ -81,4 +101,5 @@ public:
 private:
 	unsigned int lhs;
 	unsigned int rhs;
+	unsigned int result;
 };

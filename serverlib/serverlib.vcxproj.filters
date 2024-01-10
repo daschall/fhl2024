@@ -53,5 +53,11 @@
     <ClCompile Include="queryprocessing\operators.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="expressions\expressions.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\join.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
