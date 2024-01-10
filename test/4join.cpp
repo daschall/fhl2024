@@ -100,3 +100,26 @@ TEST(JoinQpTestSuite, Join4)
 
 	EXPECT_EQ(100, numRows);
 }
+
+// Tests that the join operator works on multiple identical rows.
+//
+TEST(JoinQpTestSuite, Join5)
+{
+	Value rgvals[2];
+
+	Qp::RowGenerator left(1, 10, 1, 2);
+	Qp::RowGenerator right(1, 10, 1, 2);
+	Qp::Join join(&left, &right, 1, 1, [](Value* l, Value* r) { return l[0] == r[0]; });
+
+	Value numRows = 0;
+
+	join.Open();
+	while (join.GetRow(rgvals))
+	{
+		++numRows;
+		EXPECT_EQ(rgvals[0], rgvals[1]);
+	}
+	join.Close();
+
+	EXPECT_EQ(40, numRows);
+}
