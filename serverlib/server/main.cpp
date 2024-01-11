@@ -3,6 +3,7 @@
 #include "queryprocessing/operators.h"
 #include "expressions/expressions.h"
 #include "common/helper.h"
+#include "storeng/btree.h"
 
 int main()
 {
@@ -16,13 +17,26 @@ int main()
     //
     Comparison<ComparisonType::LE> cmp(0, 2);
 
+/*
     // Generate rows from 0 to 100.
     //
     Qp::RowGenerator scanner(0, 100, 1);
+*/
+
+    SE::BTree btree;
+
+    for (Value i = 0; i < 100; i++)
+    {
+        btree.InsertRow(i);
+    }
+
+    SE::BTreeSession btreeSession(&btree);
+
+    Qp::BTreeScanner btreeScanner(&btreeSession);
 
     // Filter using above expression.
-    //
-    Qp::Filter filter(&scanner, &cmp);
+//
+    Qp::Filter filter(&btreeScanner, &cmp);
 
     // Root of the query is the filter.
     //

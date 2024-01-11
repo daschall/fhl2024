@@ -2,6 +2,7 @@
 
 #include "interfaces/ioperator.h"
 #include "interfaces/iexpression.h"
+#include "interfaces/istorage.h"
 
 #include <vector>
 
@@ -30,13 +31,14 @@ namespace Qp
 	class BTreeScanner : public IOperator
 	{
 	public:
-		BTreeScanner();
+		BTreeScanner(SE::IStorage* storage);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
 		void Close() override;
 
 	private:
+		SE::IStorage* m_storage;
 	};
 
 

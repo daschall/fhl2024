@@ -41,7 +41,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -146,10 +146,15 @@
     <ClInclude Include="expressions\expressions.h" />
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
+	<ClInclude Include="interfaces\istorage.h" />
     <ClInclude Include="queryprocessing\operators.h" />
+	<ClInclude Include="storeng\page.h" />
+	<ClInclude Include="storeng\btree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\operators.cpp" />
+	<ClCompile Include="storeng\page.cpp" />
+	<ClCompile Include="storeng\btree.cpp" />
     <ClCompile Include="server\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
