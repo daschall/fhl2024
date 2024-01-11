@@ -53,5 +53,8 @@
     <ClCompile Include="queryprocessing\sort.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="queryprocessing\project.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

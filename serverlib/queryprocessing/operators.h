@@ -60,6 +60,8 @@ namespace Qp
 		BooleanExpression expr;
 	};
 
+	// This operator calls an expression on every row received from its child.
+	//
 	class Project : public IOperator
 	{
 	public:

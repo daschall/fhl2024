@@ -151,6 +151,7 @@
     <ClCompile Include="queryprocessing\aggregate.cpp" />
     <ClCompile Include="queryprocessing\join.cpp" />
     <ClCompile Include="queryprocessing\operators.cpp" />
+    <ClCompile Include="queryprocessing\project.cpp" />
     <ClCompile Include="queryprocessing\sort.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
