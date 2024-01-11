@@ -18,3 +18,7 @@ typedef bool(*JoinExpression)(Value*, Value*);
 // in which case the aggregate expression needs to reset its values to start again at 0.
 //
 typedef void(*AggregateExpression)(Value*, Value*, bool);
+
+// A compare expression compares two rows and returns whether the first sorts lower than the second.
+//
+typedef bool(*CompareExpression)(Value*, Value*);
