@@ -6,6 +6,8 @@
 
 namespace SE
 {
+	// Page header stores metadata about the page.
+	//
 	class PageHeader
 	{
 	public:
@@ -36,6 +38,8 @@ namespace SE
 	const int PAGE_SIZE = 8192;
 	const int PAGE_DATA_SIZE = PAGE_SIZE - sizeof(PageHeader);
 
+	// Structure of a page includes the header and the data section.
+	//
 	class Page : public PageHeader
 	{
 	public:
@@ -45,6 +49,8 @@ namespace SE
 			:
 			PageHeader(pageID, level)
 		{
+			// Zero out the page.
+			//
 			memset(m_data, 0, (unsigned int)(PAGE_DATA_SIZE));
 		}
 
@@ -58,15 +64,18 @@ namespace SE
 			return m_level == 0;
 		}
 
-		void InsertRow(Value val);
-
+		// Page interfaces to read/write rows.
+		//
 		Value GetRow(unsigned int slot);
 		Value GetLastRow();
+		void InsertRow(Value val);
 
 	private:
 		unsigned char m_data[PAGE_DATA_SIZE];
 	};
 
+	// Implementation of buffer pool to provide list of pages.
+	//
 	class BufferPool
 	{
 	public:
@@ -83,5 +92,7 @@ namespace SE
 		std::map<int, Page*> m_pages;
 	};
 
+	// Singleton buffer pool.
+	//
 	BufferPool* GetGlobalBufferPool();
 }

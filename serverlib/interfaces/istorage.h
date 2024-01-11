@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 namespace SE
 {
 	// This is the interface for storage engine.
@@ -10,7 +9,7 @@ namespace SE
 	class IStorage
 	{
 	public:
-		// Opens the operator and initialized internal state.
+		// Initializes the storage session.
 		//
 		virtual void Open() = 0;
 
@@ -19,7 +18,7 @@ namespace SE
 		//
 		virtual bool GetRow(Value *rgvals) = 0;
 
-		// Closes the operator and releases resources.
+		// Closes the session and releases resources.
 		//
 		virtual void Close() = 0;
 	};

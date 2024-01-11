@@ -28,6 +28,9 @@ namespace Qp
 		Value step;
 	};
 
+	// BTree scanner operator which iterates over the entire tree
+	// left to right.
+	//
 	class BTreeScanner : public IOperator
 	{
 	public:

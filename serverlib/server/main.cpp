@@ -7,49 +7,55 @@
 
 int main()
 {
-    // Create a value array to hold data.
-    //
-    const int nCols = 3;
-    Value rgvals[nCols] = {};
-    rgvals[2] = 10;
-    
-    // col0 < 10
-    //
-    Comparison<ComparisonType::LE> cmp(0, 2);
+	// Create a value array to hold data.
+	//
+	const int nCols = 3;
+	Value rgvals[nCols] = {};
+	rgvals[2] = 20;
+	
+	// col0 < 10
+	//
+	Comparison<ComparisonType::LE> cmp(0, 2);
 
 /*
-    // Generate rows from 0 to 100.
-    //
-    Qp::RowGenerator scanner(0, 100, 1);
+	// Generate rows from 0 to 100.
+	//
+	Qp::RowGenerator scanner(0, 100, 1);
 */
 
-    SE::BTree btree;
+	// Create a BTree with 100 rows.
+	//
+	SE::BTree btree;
 
-    for (Value i = 0; i < 100; i++)
-    {
-        btree.InsertRow(i);
-    }
+	for (Value i = 0; i < 100; i++)
+	{
+		btree.InsertRow(i);
+	}
 
-    SE::BTreeSession btreeSession(&btree);
+	// Create a session to iterate over the BTree created above.
+	//
+	SE::BTreeSession btreeSession(&btree);
 
-    Qp::BTreeScanner btreeScanner(&btreeSession);
+	// Init the scan operator.
+	//
+	Qp::BTreeScanner btreeScanner(&btreeSession);
 
-    // Filter using above expression.
-//
-    Qp::Filter filter(&btreeScanner, &cmp);
+	// Filter using above expression.
+	//
+	Qp::Filter filter(&btreeScanner, &cmp);
 
-    // Root of the query is the filter.
-    //
-    Qp::IOperator* root = &filter;
+	// Root of the query is the filter.
+	//
+	Qp::IOperator* root = &filter;
 
 
-    // Now run the query until we get no more rows.
-    //
-    root->Open();
-    while (root->GetRow(rgvals))
-    {
-        DumpValues(std::cout, rgvals, nCols);
-    }
-    root->Close();
+	// Now run the query until we get no more rows.
+	//
+	root->Open();
+	while (root->GetRow(rgvals))
+	{
+		DumpValues(std::cout, rgvals, nCols);
+	}
+	root->Close();
 }
 
