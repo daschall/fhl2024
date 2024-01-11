@@ -2,6 +2,7 @@
 
 #include "interfaces/ioperator.h"
 #include "interfaces/iexpression.h"
+#include "interfaces/istorage.h"
 
 #include <deque>
 
@@ -30,16 +31,20 @@ namespace Qp
 		unsigned int repeatCounter;
 	};
 
+	// BTree scanner operator which iterates over the entire tree
+	// left to right.
+	//
 	class BTreeScanner : public IOperator
 	{
 	public:
-		BTreeScanner();
+		BTreeScanner(SE::IStorage* storage);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
 		void Close() override;
 
 	private:
+		SE::IStorage* m_storage;
 	};
 
 

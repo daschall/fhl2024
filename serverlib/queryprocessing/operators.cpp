@@ -41,21 +41,25 @@ namespace Qp
 	void RowGenerator::Close()
 	{}
 
-	BTreeScanner::BTreeScanner()
+	BTreeScanner::BTreeScanner(SE::IStorage* storage)
 	{
+		m_storage = storage;
 	}
 
 	void BTreeScanner::Open()
-	{}
+	{
+		m_storage->Open();
+	}
 
 	bool BTreeScanner::GetRow(Value* rgvals)
 	{
-		return false;
+		return m_storage->GetRow(rgvals);
 	}
 
 	void BTreeScanner::Close()
-	{}
-
+	{
+		m_storage->Close();
+	}
 
 	Filter::Filter(IOperator* child, BooleanExpression expr)
 		: child(child)
