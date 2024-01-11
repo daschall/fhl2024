@@ -152,7 +152,6 @@
     <ClCompile Include="queryprocessing\join.cpp" />
     <ClCompile Include="queryprocessing\operators.cpp" />
     <ClCompile Include="queryprocessing\sort.cpp" />
-    <ClCompile Include="server\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

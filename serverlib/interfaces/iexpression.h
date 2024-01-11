@@ -3,8 +3,13 @@
 #include "common/value.h"
 
 
-typedef void(*Expression)(Value*);
+// A project expression takes a row and modifies any values.
+//
+typedef void(*ProjectExpression)(Value*);
 
+// A boolean expression evaluates an expression on a row and returns
+// whether the expression is true or false for that row.
+//
 typedef bool(*BooleanExpression)(Value*);
 
 // A join expression takes two rows (left and right) as input

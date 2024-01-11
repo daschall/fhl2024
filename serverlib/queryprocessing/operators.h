@@ -63,7 +63,7 @@ namespace Qp
 	class Project : public IOperator
 	{
 	public:
-		Project(IOperator* child, Expression expr);
+		Project(IOperator* child, ProjectExpression expr);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
@@ -71,7 +71,7 @@ namespace Qp
 
 	private:
 		IOperator* child;
-		Expression expr;
+		ProjectExpression expr;
 	};
 	
 	// This operator joins rows from two inputs on two given columns.
