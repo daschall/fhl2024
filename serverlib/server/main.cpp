@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "queryprocessing/operators.h"
-#include "expressions/expressions.h"
 #include "common/helper.h"
 #include "storeng/btree.h"
 
@@ -12,16 +11,6 @@ int main()
 	const int nCols = 3;
 	Value rgvals[nCols] = {};
 	rgvals[2] = 20;
-	
-	// col0 < 10
-	//
-	Comparison<ComparisonType::LE> cmp(0, 2);
-
-/*
-	// Generate rows from 0 to 100.
-	//
-	Qp::RowGenerator scanner(0, 100, 1);
-*/
 
 	// Create a BTree with 100 rows.
 	//
@@ -42,7 +31,7 @@ int main()
 
 	// Filter using above expression.
 	//
-	Qp::Filter filter(&btreeScanner, &cmp);
+	Qp::Filter filter(&btreeScanner, [](Value* rgvals) { return rgvals[0] == 5; });
 
 	// Root of the query is the filter.
 	//
