@@ -1,5 +1,5 @@
 /*
-	This file contains basic QP tests.
+	This file contains test for the RowGenerator.
 	They should pass with the minimal implementation already.
 */
 

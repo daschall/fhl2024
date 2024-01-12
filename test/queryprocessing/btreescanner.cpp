@@ -10,7 +10,7 @@ TEST(BTreeScannerQpTestSuite, Scanner1)
 {
 	Value rgvals[1];
 
-	Qp::BTreeScanner scanner;
+	Qp::BTreeScanner scanner(nullptr);
 
 	Value numRows = 0;
 

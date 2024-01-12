@@ -1,10 +1,14 @@
-#include <iostream>
+/*
+	This file contains BTree tests.
+*/
 
-#include "queryprocessing/operators.h"
+#include "pch.h"
+
 #include "common/helper.h"
-#include "storeng/btree.h"
 
-int main()
+// Tests that the scanner reads all the rows from the tree.
+//
+TEST(BTreeSeTestSuite, Btree1)
 {
 	// Create a value array to hold data.
 	//
@@ -47,4 +51,3 @@ int main()
 	}
 	root->Close();
 }
-
