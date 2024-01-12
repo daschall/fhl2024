@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="queryprocessing\rowgenerator.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\btreescanner.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\filter.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\join.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\project.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\sort.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\streamaggregate.cpp">
+      <Filter>queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="storeng\btree.cpp">
+      <Filter>storeng</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="queryprocessing">
+      <UniqueIdentifier>{23b69c9f-b827-4042-a211-2a076b9de6f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="storeng">
+      <UniqueIdentifier>{e01d9d49-8c99-4a97-b8a3-95506e1c8817}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

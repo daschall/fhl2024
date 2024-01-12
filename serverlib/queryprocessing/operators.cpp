@@ -8,6 +8,7 @@ namespace Qp
 		, step(step)
 		, cur(min)
 		, repeat(repeat)
+		, repeatCounter(0)
 	{}
 
 	void RowGenerator::Open()
