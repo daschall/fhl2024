@@ -1,4 +1,7 @@
-#include "btreesession.h"
+#include "interfaces/btreesession.h"
+#include "interfaces/btree.h"
+
+#include "page.h"
 
 namespace SE
 {

@@ -143,14 +143,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common\value.h" />
+    <ClInclude Include="interfaces\btree.h" />
+    <ClInclude Include="interfaces\btreesession.h" />
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
-    <ClInclude Include="interfaces\istorage.h" />
     <ClInclude Include="queryprocessing\operators.h" />
+    <ClInclude Include="storeng\buffer.h" />
     <ClInclude Include="storeng\page.h" />
-    <ClInclude Include="storeng\btree.h" />
-	<ClInclude Include="storeng\btreesession.h" />
-	<ClInclude Include="storeng\buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\aggregate.cpp" />
@@ -160,8 +159,8 @@
     <ClCompile Include="queryprocessing\sort.cpp" />
     <ClCompile Include="storeng\page.cpp" />
     <ClCompile Include="storeng\btree.cpp" />
-	<ClCompile Include="storeng\btreesession.cpp" />
-	<ClCompile Include="storeng\buffer.cpp" />
+    <ClCompile Include="storeng\btreesession.cpp" />
+    <ClCompile Include="storeng\buffer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

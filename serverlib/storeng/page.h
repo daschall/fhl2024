@@ -3,11 +3,10 @@
 #include <map>
 #include <assert.h>
 #include "common/value.h"
+#include "interfaces//btreesession.h"
 
 namespace SE
 {
-	typedef unsigned int PageId;
-
 	// Record structure for index page.
 	//
 	struct IndexPagePayload

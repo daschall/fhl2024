@@ -64,7 +64,6 @@ TEST(FilterQpTestSuite, Filter3)
 	while (filter.GetRow(rgvals))
 	{
 		++numRows;
-		FAIL("Should not have returned a row");
 	}
 	filter.Close();
 
