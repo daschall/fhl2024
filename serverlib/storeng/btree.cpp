@@ -1,4 +1,4 @@
-#include "interfaces/btree.h"
+#include "btree.h"
 
 #include "page.h"
 #include "buffer.h"

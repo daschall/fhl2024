@@ -10,10 +10,10 @@ namespace Qp
 {
 	// This operator generates values between [min..max] at step interval.
 	//
-	class RowGenerator : public IOperator
+	class ConstScan : public IOperator
 	{
 	public:
-		RowGenerator(Value min, Value max, Value step, unsigned int repeat = 1);
+		ConstScan(Value min, Value max, Value step, unsigned int repeat = 1);
 
 		void Open() override;
 

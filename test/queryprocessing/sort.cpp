@@ -8,7 +8,7 @@
 //
 TEST(SortQpTestSuite, SortDescending)
 {
-	Qp::RowGenerator rowGen(1, 100, 1, 3);
+	Qp::ConstScan rowGen(1, 100, 1, 3);
 	Qp::Sort sort(&rowGen, 1,
 		[](Value* left, Value* right)
 		{
@@ -40,7 +40,7 @@ TEST(SortQpTestSuite, SortDescending)
 //
 TEST(SortQpTestSuite, SortAscending)
 {
-	Qp::RowGenerator rowGen(1, 100, 1, 3);
+	Qp::ConstScan rowGen(1, 100, 1, 3);
 	Qp::Sort sort(&rowGen, 1,
 		[](Value* in, Value* out)
 		{

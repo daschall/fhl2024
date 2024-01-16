@@ -10,7 +10,7 @@
 TEST(BasicQpTestSuite, RowGenerator)
 {
 	Value rgvals[1];
-	Qp::RowGenerator rowGen(0, 10, 1);
+	Qp::ConstScan rowGen(0, 10, 1);
 
 	Value numRows = 0;
 
@@ -30,7 +30,7 @@ TEST(BasicQpTestSuite, RowGenerator)
 TEST(BasicQpTestSuite, RowGenerator2)
 {
 	Value rgvals[1];
-	Qp::RowGenerator rowGen(-20, 20, 2);
+	Qp::ConstScan rowGen(-20, 20, 2);
 
 	Value numRows = 0;
 
@@ -50,7 +50,7 @@ TEST(BasicQpTestSuite, RowGenerator2)
 TEST(BasicQpTestSuite, RowGenerator3)
 {
 	Value rgvals[1];
-	Qp::RowGenerator rowGen(-19, 20 /* 20 is not expected to be returned */, 2);
+	Qp::ConstScan rowGen(-19, 20 /* 20 is not expected to be returned */, 2);
 
 	Value numRows = 0;
 
@@ -70,7 +70,7 @@ TEST(BasicQpTestSuite, RowGenerator3)
 TEST(BasicQpTestSuite, RowGenerator4)
 {
 	Value rgvals[1];
-	Qp::RowGenerator rowGen(0, 9, 1, 5);
+	Qp::ConstScan rowGen(0, 9, 1, 5);
 
 	Value numRows = 0;
 

@@ -8,7 +8,7 @@
 //
 TEST(StreamAggregateQpTestSuite, StreamAgg1)
 {
-	Qp::RowGenerator rowGen(1, 10, 1, 10);
+	Qp::ConstScan rowGen(1, 10, 1, 10);
 	Qp::StreamAggregate agg(&rowGen, 1, 0,
 		[](Value* in, Value* out, bool firstRow)
 		{

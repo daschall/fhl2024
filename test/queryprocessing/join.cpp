@@ -10,8 +10,8 @@ TEST(JoinQpTestSuite, Join1)
 {
 	Value rgvals[2];
 
-	Qp::RowGenerator left(1, 10, 1);
-	Qp::RowGenerator right(1, 10, 1);
+	Qp::ConstScan left(1, 10, 1);
+	Qp::ConstScan right(1, 10, 1);
 	Qp::Join join(&left, &right, 1, 1, [](Value* l, Value* r) { return l[0] == r[0]; });
 
 	Value numRows = 0;
@@ -36,8 +36,8 @@ TEST(JoinQpTestSuite, Join2)
 	rgvals[1] = 111;
 	rgvals[3] = 333;
 
-	Qp::RowGenerator left(1, 10, 1);
-	Qp::RowGenerator right(1, 10, 1);
+	Qp::ConstScan left(1, 10, 1);
+	Qp::ConstScan right(1, 10, 1);
 	Qp::Join join(&left, &right, 2, 2, [](Value* l, Value* r) { return l[0] == r[0]; });
 
 	Value numRows = 0;
@@ -62,8 +62,8 @@ TEST(JoinQpTestSuite, Join3)
 {
 	Value rgvals[2];
 
-	Qp::RowGenerator left(1, 10, 1);
-	Qp::RowGenerator right(1, 10, 1);
+	Qp::ConstScan left(1, 10, 1);
+	Qp::ConstScan right(1, 10, 1);
 	Qp::Join join(&left, &right, 1, 1, [](Value* l, Value* r) { return l[0] != r[0]; });
 
 	Value numRows = 0;
@@ -85,8 +85,8 @@ TEST(JoinQpTestSuite, Join4)
 {
 	Value rgvals[2];
 
-	Qp::RowGenerator left(1, 10, 1);
-	Qp::RowGenerator right(1, 10, 1);
+	Qp::ConstScan left(1, 10, 1);
+	Qp::ConstScan right(1, 10, 1);
 	Qp::Join join(&left, &right, 1, 1, [](Value* l, Value* r) { return true; });
 
 	Value numRows = 0;
@@ -107,8 +107,8 @@ TEST(JoinQpTestSuite, Join5)
 {
 	Value rgvals[2];
 
-	Qp::RowGenerator left(1, 10, 1, 2);
-	Qp::RowGenerator right(1, 10, 1, 2);
+	Qp::ConstScan left(1, 10, 1, 2);
+	Qp::ConstScan right(1, 10, 1, 2);
 	Qp::Join join(&left, &right, 1, 1, [](Value* l, Value* r) { return l[0] == r[0]; });
 
 	Value numRows = 0;

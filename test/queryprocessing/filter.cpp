@@ -10,7 +10,7 @@ TEST(FilterQpTestSuite, Filter1)
 {
 	Value rgvals[1];
 
-	Qp::RowGenerator rowGen(0, 10, 1);
+	Qp::ConstScan rowGen(0, 10, 1);
 	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] == 5; });
 
 	Value numRows = 0;
@@ -33,7 +33,7 @@ TEST(FilterQpTestSuite, Filter2)
 {
 	Value rgvals[1];
 
-	Qp::RowGenerator rowGen(0, 10, 1);
+	Qp::ConstScan rowGen(0, 10, 1);
 	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] > 5; });
 
 	Value numRows = 0;
@@ -55,7 +55,7 @@ TEST(FilterQpTestSuite, Filter3)
 {
 	Value rgvals[2];
 
-	Qp::RowGenerator rowGen(0, 10, 1);
+	Qp::ConstScan rowGen(0, 10, 1);
 	Qp::Filter filter(&rowGen, [](Value* rgvals) { return rgvals[0] == 999; });
 
 	Value numRows = 0;

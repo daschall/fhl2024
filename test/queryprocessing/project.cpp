@@ -10,7 +10,7 @@ TEST(ProjectQpTestSuite, Project1)
 {
 	Value rgvals[3];
 	rgvals[1] = 0;
-	Qp::RowGenerator rowGen(1, 10, 1);
+	Qp::ConstScan rowGen(1, 10, 1);
 	Qp::Project project(&rowGen, [](Value* rgval)
 		{
 			// Increment the second column.

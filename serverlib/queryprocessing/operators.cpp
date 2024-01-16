@@ -2,7 +2,7 @@
 
 namespace Qp
 {
-	RowGenerator::RowGenerator(Value min, Value max, Value step, unsigned int repeat)
+	ConstScan::ConstScan(Value min, Value max, Value step, unsigned int repeat)
 		: min(min)
 		, max(max)
 		, step(step)
@@ -11,13 +11,13 @@ namespace Qp
 		, repeatCounter(0)
 	{}
 
-	void RowGenerator::Open()
+	void ConstScan::Open()
 	{
 		cur = min;
 		repeatCounter = 1;
 	}
 
-	bool RowGenerator::GetRow(Value* rgvals)
+	bool ConstScan::GetRow(Value* rgvals)
 	{
 		if (cur <= max)
 		{
@@ -39,7 +39,7 @@ namespace Qp
 		}
 	}
 
-	void RowGenerator::Close()
+	void ConstScan::Close()
 	{}
 
 	BTreeScanner::BTreeScanner(SE::IStorage *storage)
