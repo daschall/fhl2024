@@ -1,4 +1,5 @@
 #include "page.h"
+#include "buffer.h"
 #include "common/value.h"
 #include "interfaces/istorage.h"
 
@@ -12,6 +13,13 @@ namespace SE
 	public:
 		BTree();
 
+		// Check if a page's level is the root level of this tree.
+		//
+		bool IsRootLevel(unsigned int level)
+		{
+			return (level == m_rootLevel);
+		}
+
 		// Implement accessors to get rows from the tree.
 		//
 		Value GetFirstRow();
@@ -20,6 +28,11 @@ namespace SE
 		// Insert rows into the tree.
 		//
 		void InsertRow(Value val);
+
+		void Split(Value val);
+
+		Value TransferRows(Page* leftPage, Page* rightPage);
+		void InsertRowIntoIndexPage(Page* parentPage, Value beginVal, Value endVal, PageId leafPageID);
 
 	private:
 		// Find the page into which a scan or insert needs to go.

@@ -6,18 +6,29 @@
 
 namespace SE
 {
+	typedef unsigned int PageId;
+
+	struct IndexPagePayload
+	{
+		Value beginKey;
+		Value endKey;
+		PageId pageID;
+	};
+
 	// Page header stores metadata about the page.
 	//
 	class PageHeader
 	{
 	public:
 		PageHeader(
-			unsigned int pageID,
+			PageId pageID,
 			unsigned int level)
 			:
-			m_pageID(pageID),
+			m_pageId(pageId),
 			m_level(level),
-			m_slotCount(0)
+			m_slotCount(0),
+			m_prevPageId(0),
+			m_nextPageId(0)
 		{}
 
 		unsigned int GetSlotCount()
@@ -25,14 +36,28 @@ namespace SE
 			return m_slotCount;
 		}
 
+		void SetSlotCount(unsigned int slotCount)
+		{
+			m_slotCount = slotCount;
+		}
+
+		void SetPrevPageID(PageId prevPageId)
+		{
+			m_prevPageId = prevPageId;
+		}
+
 	protected:
-		unsigned int m_pageID;
+		PageId m_pageID;
 
 		// 0 is leaf.
 		//
 		unsigned int m_level;
 
 		unsigned int m_slotCount;
+
+		PageId m_prevPageId;
+
+		PageId m_nextPageId;
 	};
 
 	const int PAGE_SIZE = 8192;
@@ -44,24 +69,29 @@ namespace SE
 	{
 	public:
 		Page(
-			unsigned int pageID,
+			PageId pageId,
 			unsigned int level)
 			:
-			PageHeader(pageID, level)
+			PageHeader(pageId, level)
 		{
 			// Zero out the page.
 			//
 			memset(m_data, 0, (unsigned int)(PAGE_DATA_SIZE));
 		}
 
-		unsigned int GetPageId()
+		PageId GetPageId()
 		{
-			return m_pageID;
+			return m_pageId;
 		}
 
 		bool IsLeafLevel()
 		{
 			return m_level == 0;
+		}
+
+		unsigned int GetLevel()
+		{
+			return m_level;
 		}
 
 		// Page interfaces to read/write rows.
@@ -70,29 +100,9 @@ namespace SE
 		Value GetLastRow();
 		void InsertRow(Value val);
 
+		bool IsFull();
+
 	private:
 		unsigned char m_data[PAGE_DATA_SIZE];
 	};
-
-	// Implementation of buffer pool to provide list of pages.
-	//
-	class BufferPool
-	{
-	public:
-		BufferPool()
-			:
-			m_nextPageID(0)
-		{}
-
-		Page* GetNewPage(unsigned int level);
-		Page* FindPage(unsigned int pageID);
-
-	private:
-		unsigned int m_nextPageID;
-		std::map<int, Page*> m_pages;
-	};
-
-	// Singleton buffer pool.
-	//
-	BufferPool* GetGlobalBufferPool();
 }

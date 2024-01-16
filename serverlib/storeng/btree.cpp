@@ -15,7 +15,103 @@ namespace SE
 		Page* page = Position(val, true);
 		assert(page->IsLeafLevel());
 
+		if (page->IsFull())
+		{
+			Split(val);
+
+			// Find new insert point after split.
+			//
+			page = Position(val, true);
+			assert(page->IsLeafLevel());
+			assert(!page->IsFull());
+		}
+
 		page->InsertRow(val);
+	}
+
+	// Split the tree based on the value provided.
+	//
+	void BTree::Split(Value val)
+	{
+retrySplit:
+		// Traverse the tree from the root and split along the way.
+		//
+		Page* page = GetGlobalBufferPool()->FindPage(m_rootPageID);
+		Page* parentPage = nullptr;
+
+traverse:
+		if (!page->IsLeafLevel())
+		{
+			if (page->IsFull())
+			{
+				// We first need to split the internal tree and then retry splitting leaf level.
+				//
+
+				goto retrySplit;
+			}
+			else
+			{
+				// Find the child page.
+				//
+				parentPage = page;
+				//page = FindChildPage(page, val);
+
+				goto traverse;
+			}
+		}
+		else
+		{
+			assert(page->IsFull());
+
+			if (IsRootLevel(page->GetLevel()))
+			{
+				m_rootLevel++;
+				parentPage = GetGlobalBufferPool()->GetNewPage(m_rootLevel);
+				m_rootPageID = parentPage->GetPageId();
+
+			}
+			else
+			{
+				assert(parentPage != nullptr);
+			}
+
+			Page* newLeafPage = GetGlobalBufferPool()->GetNewPage(0);
+			PageId newLeafPageId = newLeafPage->GetPageId();
+
+			Value firstVal = page->GetRow(0);
+			Value lastVal = page->GetLastRow();
+
+			Value splitVal = TransferRows(page, newLeafPage);
+
+			// Fix linkages.
+			//
+			InsertRowIntoIndexPage(parentPage, firstVal, splitVal, page->GetPageId());
+			InsertRowIntoIndexPage(parentPage, splitVal+1, lastVal, newLeafPage->GetPageId());
+
+			newLeafPage->SetPrevPage(page->GetPageId());
+			page->SetNextPage(newLeafPage->GetPageId());
+		}
+	}
+
+	Value BTree::TransferRows(Page* leftPage, Page* rightPage)
+	{
+		unsigned int splitPoint = leftPage->GetSlotCount()/2;
+		Value splitVal = leftPage->GetRow(splitPoint);
+
+		// Transfer rows from left page to right from the split point.
+		//
+		for (unsigned int slot = splitPoint + 1; slot < leftPage->GetSlotCount(); slot++)
+		{
+			Value slotVal = leftPage->GetRow(slot);
+			rightPage->InsertRow(slotVal);
+		}
+
+		leftPage->SetSlotCount(splitPoint);
+	}
+
+	void BTree::InsertRowIntoIndexPage(Page* parentPage, Value beginVal, Value endVal, PageId leafPageID)
+	{
+
 	}
 
 	// Get the first key of the BTree.
