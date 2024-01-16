@@ -1,12 +1,14 @@
-#include "btree.h"
 #include "common/value.h"
-#include "interfaces/istorage.h"
+#include "btree.h"
+
+
+#pragma once
 
 namespace SE
 {
 	// A session operates on an index and stores progress of a scan.
 	//
-	class BTreeSession: public IStorage
+	class BTreeSession
 	{
 	public:
 		BTreeSession(BTree* btree);

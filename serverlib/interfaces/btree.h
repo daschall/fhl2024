@@ -1,10 +1,12 @@
-#include "page.h"
-#include "buffer.h"
 #include "common/value.h"
-#include "interfaces/istorage.h"
+
+#pragma once
 
 namespace SE
 {
+	typedef unsigned int PageId;
+	class Page;
+
 	// This class implements a BTree structure. It is currently in-memory.
 	// Each row contains one 'Value' which is also the key.
 	//
