@@ -148,8 +148,8 @@
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
     <ClInclude Include="queryprocessing\operators.h" />
-    <ClInclude Include="storeng\page.h" />
     <ClInclude Include="storeng\buffer.h" />
+    <ClInclude Include="storeng\page.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\aggregate.cpp" />
