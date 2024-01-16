@@ -115,6 +115,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="storeng\btree.cpp" />
+	<ClCompile Include="functional\e2e.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
