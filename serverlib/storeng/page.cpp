@@ -37,7 +37,20 @@ namespace SE
 			assert(val > prevVal);
 		}
 		
-		*((Value*)(m_data)+m_slotCount) = val;
+
+		*((Value*)((m_data)+(m_slotCount*sizeof(Value)))) = val;
+
+		m_slotCount++;
+	}
+
+	void Page::InsertIndexRow(Value beginVal, PageId pageId)
+	{
+		assert(!IsLeafLevel());
+
+		IndexPagePayload* newRecord = (IndexPagePayload *)(m_data + (m_slotCount * sizeof(IndexPagePayload)));
+
+		newRecord->beginKey = beginVal;
+		newRecord->pageID = pageId;
 
 		m_slotCount++;
 	}
@@ -46,13 +59,21 @@ namespace SE
 	//
 	Value Page::GetRow(unsigned int slot)
 	{
-		return *((Value*)(m_data)+slot);
+		return *((Value*)((m_data)+(slot*sizeof(Value))));
+	}
+
+	IndexPagePayload* Page::GetIndexRow(unsigned int slot)
+	{
+		assert(!IsLeafLevel());
+
+		return (IndexPagePayload*)(m_data + (m_slotCount * sizeof(IndexPagePayload)));
+
 	}
 
 	// Get the last key value on the page. This helps with positioning.
 	//
 	Value Page::GetLastRow()
 	{
-		return *((Value*)(m_data)+m_slotCount - 1);
+		return *((Value*)((m_data)+((m_slotCount -1) * sizeof(Value))));
 	}
 }

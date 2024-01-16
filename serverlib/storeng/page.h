@@ -11,7 +11,6 @@ namespace SE
 	struct IndexPagePayload
 	{
 		Value beginKey;
-		Value endKey;
 		PageId pageID;
 	};
 
@@ -21,7 +20,7 @@ namespace SE
 	{
 	public:
 		PageHeader(
-			PageId pageID,
+			PageId pageId,
 			unsigned int level)
 			:
 			m_pageId(pageId),
@@ -41,13 +40,18 @@ namespace SE
 			m_slotCount = slotCount;
 		}
 
-		void SetPrevPageID(PageId prevPageId)
+		void SetPrevPageId(PageId prevPageId)
 		{
 			m_prevPageId = prevPageId;
 		}
 
+		void SetNextPageId(PageId nextPageId)
+		{
+			m_nextPageId = nextPageId;
+		}
+
 	protected:
-		PageId m_pageID;
+		PageId m_pageId;
 
 		// 0 is leaf.
 		//
@@ -97,8 +101,10 @@ namespace SE
 		// Page interfaces to read/write rows.
 		//
 		Value GetRow(unsigned int slot);
+		IndexPagePayload* GetIndexRow(unsigned int slot);
 		Value GetLastRow();
 		void InsertRow(Value val);
+		void InsertIndexRow(Value beginVal, PageId pageId);
 
 		bool IsFull();
 

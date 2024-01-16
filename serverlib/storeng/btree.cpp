@@ -85,11 +85,10 @@ traverse:
 
 			// Fix linkages.
 			//
-			InsertRowIntoIndexPage(parentPage, firstVal, splitVal, page->GetPageId());
-			InsertRowIntoIndexPage(parentPage, splitVal+1, lastVal, newLeafPage->GetPageId());
-
-			newLeafPage->SetPrevPage(page->GetPageId());
-			page->SetNextPage(newLeafPage->GetPageId());
+			parentPage->InsertIndexRow(firstVal, page->GetPageId());
+			parentPage->InsertIndexRow(splitVal+1, newLeafPage->GetPageId());
+			newLeafPage->SetPrevPageId(page->GetPageId());
+			page->SetNextPageId(newLeafPage->GetPageId());
 		}
 	}
 
@@ -107,11 +106,8 @@ traverse:
 		}
 
 		leftPage->SetSlotCount(splitPoint);
-	}
 
-	void BTree::InsertRowIntoIndexPage(Page* parentPage, Value beginVal, Value endVal, PageId leafPageID)
-	{
-
+		return splitVal;
 	}
 
 	// Get the first key of the BTree.
@@ -129,6 +125,7 @@ traverse:
 	{
 		Page* page = GetGlobalBufferPool()->FindPage(m_rootPageID);
 
+traverse:
 		if (page->IsLeafLevel())
 		{
 			if (!forInsert)
@@ -143,6 +140,23 @@ traverse:
 		{
 			// Traverse the tree. Yet to be implemented.
 			//
+			PageId childPageId = 0;
+			for (unsigned int slot = 0; slot < page->GetSlotCount(); slot++)
+			{
+				IndexPagePayload* payload = page->GetIndexRow(slot);
+				if (val > payload->beginKey)
+				{
+					childPageId = payload->pageID;
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			page = GetGlobalBufferPool()->FindPage(childPageId);
+
+			goto traverse;
 		}
 
 		return page;

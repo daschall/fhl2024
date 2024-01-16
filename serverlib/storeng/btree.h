@@ -32,7 +32,6 @@ namespace SE
 		void Split(Value val);
 
 		Value TransferRows(Page* leftPage, Page* rightPage);
-		void InsertRowIntoIndexPage(Page* parentPage, Value beginVal, Value endVal, PageId leafPageID);
 
 	private:
 		// Find the page into which a scan or insert needs to go.
