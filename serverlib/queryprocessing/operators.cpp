@@ -42,7 +42,7 @@ namespace Qp
 	void RowGenerator::Close()
 	{}
 
-	BTreeScanner::BTreeScanner(SE::BTreeSession *storage)
+	BTreeScanner::BTreeScanner(SE::IStorage *storage)
 	{
 		m_storage = storage;
 	}

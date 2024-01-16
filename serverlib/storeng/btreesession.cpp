@@ -1,5 +1,5 @@
-#include "interfaces/btreesession.h"
-#include "interfaces/btree.h"
+#include "btreesession.h"
+#include "btree.h"
 
 #include "page.h"
 
@@ -7,7 +7,7 @@ namespace SE
 {
 	// Initialize a session with the BTree.
 	//
-	BTreeSession::BTreeSession(BTree* btree)
+	BTreeSession::BTreeSession(BTree *btree)
 	{
 		m_btree = btree;
 		m_currentPageId = 0;
@@ -24,7 +24,7 @@ namespace SE
 
 	// Get the next row of the tree in the session.
 	//
-	bool BTreeSession::GetRow(Value* rgvals)
+	bool BTreeSession::GetRow(Value *rgvals)
 	{
 		Value nextVal = m_btree->GetRow(&m_currentPageId, &m_currentSlot);
 
@@ -35,5 +35,11 @@ namespace SE
 
 		rgvals[0] = nextVal;
 		return true;
+	}
+
+	// Close the session and release resources.
+	//
+	void BTreeSession::Close()
+	{
 	}
 }
