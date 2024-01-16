@@ -6,9 +6,11 @@
 
 // Tests the stream aggregate operator.
 //
-TEST(StreamAggregateQpTestSuite, StreamAgg1)
+TEST(QpTestSuiteStreamAggregate, StreamAggSumAndCount)
 {
-	Qp::ConstScan rowGen(1, 10, 1, 10);
+	// Generate 100 rows from 1 to 10, each repeated 10 times.
+	//
+	Qp::ConstScan rowGen(1, 10, 1, /* repeat: */ 10);
 	Qp::StreamAggregate agg(&rowGen, 1, 0,
 		[](Value* in, Value* out, bool firstRow)
 		{

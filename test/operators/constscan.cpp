@@ -1,13 +1,13 @@
 /*
-	This file contains test for the RowGenerator.
+	This file contains test for the ConstScan.
 	They should pass with the minimal implementation already.
 */
 
 #include "pch.h"
 
-// Tests that the row generator generates numbers 0..10
+// Tests that the const scan generates numbers 0..10
 //
-TEST(BasicQpTestSuite, RowGenerator)
+TEST(QpTestSuiteConstScan, ConstScan0To10)
 {
 	Value rgvals[1];
 	Qp::ConstScan rowGen(0, 10, 1);
@@ -25,9 +25,9 @@ TEST(BasicQpTestSuite, RowGenerator)
 	EXPECT_EQ(11, numRows);
 }
 
-// Tests that the row generator generates even numbers between -20..20
+// Tests that the const scan generates even numbers between -20..20
 //
-TEST(BasicQpTestSuite, RowGenerator2)
+TEST(QpTestSuiteConstScan, ConstScanMinus20To20)
 {
 	Value rgvals[1];
 	Qp::ConstScan rowGen(-20, 20, 2);
@@ -45,9 +45,9 @@ TEST(BasicQpTestSuite, RowGenerator2)
 	EXPECT_EQ(21, numRows);
 }
 
-// Tests that the row generator generates odd numbers between -19..19
+// Tests that the const scan generates odd numbers between -19..19
 //
-TEST(BasicQpTestSuite, RowGenerator3)
+TEST(QpTestSuiteConstScan, ConstScanMinus19To19Odd)
 {
 	Value rgvals[1];
 	Qp::ConstScan rowGen(-19, 20 /* 20 is not expected to be returned */, 2);
@@ -65,12 +65,12 @@ TEST(BasicQpTestSuite, RowGenerator3)
 	EXPECT_EQ(20, numRows);
 }
 
-// Tests that the row generator properly repeats values
+// Tests that the const scan properly repeats values
 //
-TEST(BasicQpTestSuite, RowGenerator4)
+TEST(QpTestSuiteConstScan, ConstScanRepeat5Times)
 {
 	Value rgvals[1];
-	Qp::ConstScan rowGen(0, 9, 1, 5);
+	Qp::ConstScan rowGen(0, 9, 1, /* repeat: */ 5);
 
 	Value numRows = 0;
 

@@ -6,9 +6,9 @@
 
 // Tests the sort operator.
 //
-TEST(SortQpTestSuite, SortDescending)
+TEST(QpTestSuiteSort, SortDescending)
 {
-	Qp::ConstScan rowGen(1, 100, 1, 3);
+	Qp::ConstScan rowGen(1, 100, 1, /*repeat: */ 3);
 	Qp::Sort sort(&rowGen, 1,
 		[](Value* left, Value* right)
 		{
@@ -38,9 +38,9 @@ TEST(SortQpTestSuite, SortDescending)
 
 // Tests the sort operator.
 //
-TEST(SortQpTestSuite, SortAscending)
+TEST(QpTestSuiteSort, SortAscending)
 {
-	Qp::ConstScan rowGen(1, 100, 1, 3);
+	Qp::ConstScan rowGen(1, 100, 1, /*repeat: */ 3);
 	Qp::Sort sort(&rowGen, 1,
 		[](Value* in, Value* out)
 		{

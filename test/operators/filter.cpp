@@ -6,7 +6,7 @@
 
 // Tests that the filter only returns rows equal to 5
 //
-TEST(FilterQpTestSuite, Filter1)
+TEST(QpTestSuiteFilter, FilterEq5)
 {
 	Value rgvals[1];
 
@@ -29,7 +29,7 @@ TEST(FilterQpTestSuite, Filter1)
 
 // Tests that the filter only returns rows greater than 5
 //
-TEST(FilterQpTestSuite, Filter2)
+TEST(QpTestSuiteFilter, FilterGt5)
 {
 	Value rgvals[1];
 
@@ -51,7 +51,7 @@ TEST(FilterQpTestSuite, Filter2)
 
 // Tests that the filter does not return any rows
 //
-TEST(FilterQpTestSuite, Filter3)
+TEST(QpTestSuiteFilter, FilterNoRows)
 {
 	Value rgvals[2];
 

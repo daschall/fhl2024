@@ -6,7 +6,7 @@
 
 // Tests that the project expression is called for every row.
 //
-TEST(ProjectQpTestSuite, Project1)
+TEST(QpTestSuiteProject, Project1)
 {
 	Value rgvals[3];
 	rgvals[1] = 0;
