@@ -29,9 +29,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="queryprocessing\operators.h">
-      <Filter>Header Files\queryprocessing</Filter>
-    </ClInclude>
     <ClInclude Include="common\value.h">
       <Filter>Header Files\common</Filter>
     </ClInclude>
@@ -56,15 +53,33 @@
     <ClInclude Include="interfaces\istorage.h">
       <Filter>Header Files\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="queryprocessing\project.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\sort.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\aggregate.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\btreescanner.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\constscan.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\filter.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
+    <ClInclude Include="queryprocessing\join.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\aggregate.cpp">
       <Filter>Source Files\queryprocessing</Filter>
     </ClCompile>
     <ClCompile Include="queryprocessing\join.cpp">
-      <Filter>Source Files\queryprocessing</Filter>
-    </ClCompile>
-    <ClCompile Include="queryprocessing\operators.cpp">
       <Filter>Source Files\queryprocessing</Filter>
     </ClCompile>
     <ClCompile Include="queryprocessing\project.cpp">
@@ -84,6 +99,15 @@
     </ClCompile>
     <ClCompile Include="storeng\buffer.cpp">
       <Filter>Source Files\storeng</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\constscan.cpp">
+      <Filter>Source Files\queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\filter.cpp">
+      <Filter>Source Files\queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\btreescanner.cpp">
+      <Filter>Source Files\queryprocessing</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

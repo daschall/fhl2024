@@ -146,7 +146,13 @@
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
     <ClInclude Include="interfaces\istorage.h" />
-    <ClInclude Include="queryprocessing\operators.h" />
+    <ClInclude Include="queryprocessing\aggregate.h" />
+    <ClInclude Include="queryprocessing\btreescanner.h" />
+    <ClInclude Include="queryprocessing\constscan.h" />
+    <ClInclude Include="queryprocessing\filter.h" />
+    <ClInclude Include="queryprocessing\join.h" />
+    <ClInclude Include="queryprocessing\project.h" />
+    <ClInclude Include="queryprocessing\sort.h" />
     <ClInclude Include="storeng\btree.h" />
     <ClInclude Include="storeng\btreesession.h" />
     <ClInclude Include="storeng\buffer.h" />
@@ -154,8 +160,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\aggregate.cpp" />
+    <ClCompile Include="queryprocessing\btreescanner.cpp" />
+    <ClCompile Include="queryprocessing\constscan.cpp" />
+    <ClCompile Include="queryprocessing\filter.cpp" />
     <ClCompile Include="queryprocessing\join.cpp" />
-    <ClCompile Include="queryprocessing\operators.cpp" />
     <ClCompile Include="queryprocessing\project.cpp" />
     <ClCompile Include="queryprocessing\sort.cpp" />
     <ClCompile Include="storeng\page.cpp" />
