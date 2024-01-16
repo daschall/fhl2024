@@ -6,15 +6,58 @@
 
 #include "common/helper.h"
 
-// Tests that the scanner reads all the rows from the tree.
+// Tests that the scanner that projects all rows from a tree.
 //
-TEST(BTreeSeTestSuite, Btree1)
+TEST(BTreeSeTestSuite, BtreeProject)
 {
 	// Create a value array to hold data.
 	//
-	const int nCols = 3;
+	const int nCols = 1;
 	Value rgvals[nCols] = {};
-	rgvals[2] = 20;
+	unsigned int totalRows = 2000;
+
+	// Create a BTree with rows.
+	//
+	SE::BTree btree;
+
+	for (Value i = 0; i < totalRows; i++)
+	{
+		btree.InsertRow(i);
+	}
+
+	// Create a session to iterate over the BTree created above.
+	//
+	SE::BTreeSession btreeSession(&btree);
+
+	// Init the scan operator.
+	//
+	Qp::BTreeScanner btreeScanner(&btreeSession);
+
+	Qp::Project project(&btreeScanner, [](Value* rgval) {});
+	Value numRows = 0;
+
+	printf("Project begin\n");
+
+	project.Open();
+	while (project.GetRow(rgvals))
+	{
+		EXPECT_EQ(numRows, rgvals[0]);
+		++numRows;
+	}
+	project.Close();
+
+	EXPECT_EQ(totalRows, numRows);
+}
+
+
+// Tests that the scanner filters rows from a tree.
+//
+TEST(BTreeSeTestSuite, BtreeFilter)
+{
+	// Create a value array to hold data.
+	//
+	const int nCols = 1;
+	Value rgvals[nCols] = {};
 
 	// Create a BTree with 100 rows.
 	//

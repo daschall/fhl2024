@@ -6,18 +6,30 @@
 
 namespace SE
 {
+	typedef unsigned int PageId;
+
+	// Record structure for index page.
+	//
+	struct IndexPagePayload
+	{
+		Value beginKey;
+		PageId pageID;
+	};
+
 	// Page header stores metadata about the page.
 	//
 	class PageHeader
 	{
 	public:
 		PageHeader(
-			unsigned int pageID,
+			PageId pageId,
 			unsigned int level)
 			:
-			m_pageID(pageID),
+			m_pageId(pageId),
 			m_level(level),
-			m_slotCount(0)
+			m_slotCount(0),
+			m_prevPageId(0),
+			m_nextPageId(0)
 		{}
 
 		unsigned int GetSlotCount()
@@ -25,16 +37,42 @@ namespace SE
 			return m_slotCount;
 		}
 
+		void SetSlotCount(unsigned int slotCount)
+		{
+			m_slotCount = slotCount;
+		}
+
+		void SetPrevPageId(PageId prevPageId)
+		{
+			m_prevPageId = prevPageId;
+		}
+
+		void SetNextPageId(PageId nextPageId)
+		{
+			m_nextPageId = nextPageId;
+		}
+
+		PageId GetNextPageId()
+		{
+			return m_nextPageId;
+		}
+
 	protected:
-		unsigned int m_pageID;
+		PageId m_pageId;
 
 		// 0 is leaf.
 		//
 		unsigned int m_level;
 
 		unsigned int m_slotCount;
+
+		PageId m_prevPageId;
+
+		PageId m_nextPageId;
 	};
 
+	// This size can be modified. Use smaller sizes to trigger splits easily.
+	//
 	const int PAGE_SIZE = 8192;
 	const int PAGE_DATA_SIZE = PAGE_SIZE - sizeof(PageHeader);
 
@@ -44,19 +82,19 @@ namespace SE
 	{
 	public:
 		Page(
-			unsigned int pageID,
+			PageId pageId,
 			unsigned int level)
 			:
-			PageHeader(pageID, level)
+			PageHeader(pageId, level)
 		{
 			// Zero out the page.
 			//
-			memset(m_data, 0, (unsigned int)(PAGE_DATA_SIZE));
+			memset(m_data, 0, PAGE_DATA_SIZE);
 		}
 
-		unsigned int GetPageId()
+		PageId GetPageId()
 		{
-			return m_pageID;
+			return m_pageId;
 		}
 
 		bool IsLeafLevel()
@@ -64,35 +102,22 @@ namespace SE
 			return m_level == 0;
 		}
 
+		unsigned int GetLevel()
+		{
+			return m_level;
+		}
+
 		// Page interfaces to read/write rows.
 		//
 		Value GetRow(unsigned int slot);
+		IndexPagePayload* GetIndexRow(unsigned int slot);
 		Value GetLastRow();
 		void InsertRow(Value val);
+		void InsertIndexRow(Value beginVal, PageId pageId);
+
+		bool IsFull();
 
 	private:
 		unsigned char m_data[PAGE_DATA_SIZE];
 	};
-
-	// Implementation of buffer pool to provide list of pages.
-	//
-	class BufferPool
-	{
-	public:
-		BufferPool()
-			:
-			m_nextPageID(0)
-		{}
-
-		Page* GetNewPage(unsigned int level);
-		Page* FindPage(unsigned int pageID);
-
-	private:
-		unsigned int m_nextPageID;
-		std::map<int, Page*> m_pages;
-	};
-
-	// Singleton buffer pool.
-	//
-	BufferPool* GetGlobalBufferPool();
 }
