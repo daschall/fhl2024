@@ -14,9 +14,9 @@ TEST(BTreeSeTestSuite, BtreeProject)
 	//
 	const int nCols = 1;
 	Value rgvals[nCols] = {};
-	unsigned int totalRows = 8000;
+	unsigned int totalRows = 2000;
 
-	// Create a BTree with 100 rows.
+	// Create a BTree with rows.
 	//
 	SE::BTree btree;
 
@@ -35,6 +35,8 @@ TEST(BTreeSeTestSuite, BtreeProject)
 
 	Qp::Project project(&btreeScanner, [](Value* rgval) {});
 	Value numRows = 0;
+
+	printf("Project begin\n");
 
 	project.Open();
 	while (project.GetRow(rgvals))

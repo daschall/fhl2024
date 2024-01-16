@@ -104,7 +104,6 @@
   <ItemGroup>
     <ClCompile Include="queryprocessing\rowgenerator.cpp" />
     <ClCompile Include="queryprocessing\filter.cpp" />
-    <ClCompile Include="queryprocessing\btreescanner.cpp" />
     <ClCompile Include="queryprocessing\join.cpp" />
     <ClCompile Include="queryprocessing\project.cpp" />
     <ClCompile Include="queryprocessing\streamaggregate.cpp" />

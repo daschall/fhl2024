@@ -50,6 +50,11 @@ namespace SE
 			m_nextPageId = nextPageId;
 		}
 
+		PageId GetNextPageId()
+		{
+			return m_nextPageId;
+		}
+
 	protected:
 		PageId m_pageId;
 

@@ -22,8 +22,8 @@ namespace SE
 
 		// Implement accessors to get rows from the tree.
 		//
-		Value GetFirstRow();
-		Value GetNextRow(Value val);
+		Page* GetFirstLeafPage();
+		Value GetRow(PageId* pageId, unsigned int* slot);
 
 		// Insert rows into the tree.
 		//
@@ -32,6 +32,8 @@ namespace SE
 		void Split(Value val);
 
 		Value TransferRows(Page* leftPage, Page* rightPage);
+
+		Page* FindChildPage(Page* page, Value val);
 
 	private:
 		// Find the page into which a scan or insert needs to go.
@@ -63,8 +65,8 @@ namespace SE
 
 		// Store progress of the scan.
 		//
-		Value m_lastKey;
-		bool m_firstRowReturned;
+		PageId m_currentPageId;
+		unsigned int m_currentSlot;
 		BTree* m_btree;
 	};
 }

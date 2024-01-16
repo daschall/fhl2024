@@ -6,8 +6,6 @@ namespace SE
 	//
 	bool Page::IsFull()
 	{
-		assert(IsLeafLevel());
-
 		if (IsLeafLevel())
 		{
 			return (sizeof(Value) * (m_slotCount + 1) >= PAGE_DATA_SIZE);
@@ -66,7 +64,7 @@ namespace SE
 	{
 		assert(!IsLeafLevel());
 
-		return (IndexPagePayload*)(m_data + (m_slotCount * sizeof(IndexPagePayload)));
+		return (IndexPagePayload*)(m_data + (slot * sizeof(IndexPagePayload)));
 
 	}
 

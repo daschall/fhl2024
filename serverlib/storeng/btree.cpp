@@ -45,8 +45,9 @@ traverse:
 			if (page->IsFull())
 			{
 				// We first need to split the internal tree and then retry splitting leaf level.
-				//
-
+				// This needs to be implemented.
+				// 
+				assert(0);
 				goto retrySplit;
 			}
 			else
@@ -54,7 +55,8 @@ traverse:
 				// Find the child page.
 				//
 				parentPage = page;
-				//page = FindChildPage(page, val);
+				
+				page = FindChildPage(page, val);
 
 				goto traverse;
 			}
@@ -63,12 +65,14 @@ traverse:
 		{
 			assert(page->IsFull());
 
+			Value firstVal = page->GetRow(0);
+			Value lastVal = page->GetLastRow();
 			if (IsRootLevel(page->GetLevel()))
 			{
 				m_rootLevel++;
 				parentPage = GetGlobalBufferPool()->GetNewPage(m_rootLevel);
 				m_rootPageID = parentPage->GetPageId();
-
+				parentPage->InsertIndexRow(firstVal, page->GetPageId());
 			}
 			else
 			{
@@ -78,18 +82,35 @@ traverse:
 			Page* newLeafPage = GetGlobalBufferPool()->GetNewPage(0);
 			PageId newLeafPageId = newLeafPage->GetPageId();
 
-			Value firstVal = page->GetRow(0);
-			Value lastVal = page->GetLastRow();
-
 			Value splitVal = TransferRows(page, newLeafPage);
 
 			// Fix linkages.
 			//
-			parentPage->InsertIndexRow(firstVal, page->GetPageId());
+			
 			parentPage->InsertIndexRow(splitVal+1, newLeafPage->GetPageId());
 			newLeafPage->SetPrevPageId(page->GetPageId());
 			page->SetNextPageId(newLeafPage->GetPageId());
 		}
+	}
+
+	Page* BTree::FindChildPage(Page* page, Value val)
+	{
+		PageId childPageId = page->GetIndexRow(0)->pageID;
+
+		for (unsigned int slot = 0; slot < page->GetSlotCount(); slot++)
+		{
+			IndexPagePayload* payload = page->GetIndexRow(slot);
+			if (val > payload->beginKey)
+			{
+				childPageId = payload->pageID;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return GetGlobalBufferPool()->FindPage(childPageId);
 	}
 
 	Value BTree::TransferRows(Page* leftPage, Page* rightPage)
@@ -105,18 +126,16 @@ traverse:
 			rightPage->InsertRow(slotVal);
 		}
 
-		leftPage->SetSlotCount(splitPoint);
+		leftPage->SetSlotCount(splitPoint+1);
 
 		return splitVal;
 	}
 
 	// Get the first key of the BTree.
 	//
-	Value BTree::GetFirstRow()
+	Page* BTree::GetFirstLeafPage()
 	{
-		Page* page = Position(0, false);
-
-		return page->GetRow(0);
+		return Position(0, false);
 	}
 
 	// Traverse the tree to find the leaf page either for read or write.
@@ -138,24 +157,9 @@ traverse:
 		}
 		else
 		{
-			// Traverse the tree. Yet to be implemented.
+			// Traverse the tree.
 			//
-			PageId childPageId = 0;
-			for (unsigned int slot = 0; slot < page->GetSlotCount(); slot++)
-			{
-				IndexPagePayload* payload = page->GetIndexRow(slot);
-				if (val > payload->beginKey)
-				{
-					childPageId = payload->pageID;
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			page = GetGlobalBufferPool()->FindPage(childPageId);
-
+			page = FindChildPage(page, val);
 			goto traverse;
 		}
 
@@ -165,23 +169,28 @@ traverse:
 	// Get the next key of the tree given a key.
 	// -1 is used to indicate end of scan.
 	//
-	Value BTree::GetNextRow(Value val)
+	Value BTree::GetRow(PageId* pageId, unsigned int* slot)
 	{
-		Page* page = Position(val, false);
+		Page* page = GetGlobalBufferPool()->FindPage(*pageId);
 		assert(page->IsLeafLevel());
 
-		for (unsigned int slot = 0; slot < page->GetSlotCount(); slot++)
+		Value slotVal = -1;
+
+nextPage:
+		if (*slot < page->GetSlotCount())
 		{
-			Value slotVal = page->GetRow(slot);
-			if (slotVal <= val)
-			{
-				continue;
-			}
-
-			return slotVal;
+			slotVal = page->GetRow(*slot);
 		}
+		else if (page->GetNextPageId() != 0)
+		{
+			page = GetGlobalBufferPool()->FindPage(page->GetNextPageId());
+			*pageId = page->GetPageId();
+			*slot = 0;
 
-		return -1;
+			goto nextPage;
+		}
+		
+		return slotVal;
 	}
 
 	// Initialize a session with the BTree.
@@ -189,16 +198,14 @@ traverse:
 	BTreeSession::BTreeSession(BTree* btree)
 	{
 		m_btree = btree;
-		m_lastKey = 0;
-		m_firstRowReturned = false;
 	}
 
 	// Open the session and collect the first key.
 	//
 	void BTreeSession::Open()
 	{
-		m_lastKey = m_btree->GetFirstRow();
-		m_firstRowReturned = false;
+		m_currentPageId = m_btree->GetFirstLeafPage()->GetPageId();
+		m_currentSlot = 0;
 	}
 
 	// Get the next row of the tree in the session.
@@ -207,16 +214,8 @@ traverse:
 	{
 		Value nextVal = -1;
 
-		if (!m_firstRowReturned)
-		{
-			nextVal = m_lastKey;
-			m_firstRowReturned = true;
-		}
-		else
-		{
-			nextVal = m_btree->GetNextRow(m_lastKey);
-			m_lastKey = nextVal;
-		}
+		nextVal = m_btree->GetRow(&m_currentPageId, &m_currentSlot);
+		m_currentSlot++;
 
 		if (nextVal == -1)
 		{
