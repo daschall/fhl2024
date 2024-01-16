@@ -10,11 +10,11 @@ TEST(SortQpTestSuite, SortDescending)
 {
 	Qp::RowGenerator rowGen(1, 100, 1, 3);
 	Qp::Sort sort(&rowGen, 1,
-		[](Value* in, Value* out)
+		[](Value* left, Value* right)
 		{
 			// sort descending
 			//
-			return in[0] > out[0];
+			return left[0] > right[0];
 		});
 
 	Value rgvals[1];
