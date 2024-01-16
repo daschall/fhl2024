@@ -17,13 +17,14 @@ namespace SE
 	}
 
 	// Insert a key on the page.
-	// Note that this does not take care of sort order yet.
 	// It assumes rows are inserted in sorted order.
 	//
 	void Page::InsertRow(Value val)
 	{
 		assert (IsLeafLevel());
 
+		// Page should not be full.
+		//
 		if (sizeof(Value) * (m_slotCount + 1) >= PAGE_DATA_SIZE)
 		{
 			assert(0);
@@ -60,12 +61,13 @@ namespace SE
 		return *((Value*)((m_data)+(slot*sizeof(Value))));
 	}
 
+	// Get index row payload.
+	//
 	IndexPagePayload* Page::GetIndexRow(unsigned int slot)
 	{
 		assert(!IsLeafLevel());
 
 		return (IndexPagePayload*)(m_data + (slot * sizeof(IndexPagePayload)));
-
 	}
 
 	// Get the last key value on the page. This helps with positioning.

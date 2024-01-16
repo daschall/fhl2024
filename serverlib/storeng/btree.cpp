@@ -2,19 +2,25 @@
 
 namespace SE
 {
+	// Contructs basic tree structure with one page.
+	//
 	BTree::BTree()
 	{
 		m_rootLevel = 0;
 		m_rootPageID = GetGlobalBufferPool()->GetNewPage(m_rootLevel)->GetPageId();
 	}
 
-	// Insert single row
+	// Insert single row in ascending order.
 	//
 	void BTree::InsertRow(Value val)
 	{
+		// Find the insert point for the given value.
+		//
 		Page* page = Position(val, true);
 		assert(page->IsLeafLevel());
 
+		// Split the page if it is full.
+		//
 		if (page->IsFull())
 		{
 			Split(val);
@@ -23,8 +29,12 @@ namespace SE
 			//
 			page = Position(val, true);
 			assert(page->IsLeafLevel());
-			assert(!page->IsFull());
+			
 		}
+
+		// At this point, there should be space on the page.
+		//
+		assert(!page->IsFull());
 
 		page->InsertRow(val);
 	}
@@ -40,6 +50,8 @@ retrySplit:
 		Page* parentPage = nullptr;
 
 traverse:
+		// Traverse the tree till we reach leaf level.
+		//
 		if (!page->IsLeafLevel())
 		{
 			if (page->IsFull())
@@ -58,6 +70,8 @@ traverse:
 				
 				page = FindChildPage(page, val);
 
+				// Continue traversing the tree.
+				//
 				goto traverse;
 			}
 		}
@@ -67,6 +81,9 @@ traverse:
 
 			Value firstVal = page->GetRow(0);
 			Value lastVal = page->GetLastRow();
+
+			// If this is the initial root page case, increase the level of the tree.
+			//
 			if (IsRootLevel(page->GetLevel()))
 			{
 				m_rootLevel++;
@@ -79,20 +96,26 @@ traverse:
 				assert(parentPage != nullptr);
 			}
 
+			// Create a new leaf page.
+			//
 			Page* newLeafPage = GetGlobalBufferPool()->GetNewPage(0);
 			PageId newLeafPageId = newLeafPage->GetPageId();
 
+			// Transfer some rows from old page to the newly created page.
+			//
 			Value splitVal = TransferRows(page, newLeafPage);
 
-			// Fix linkages.
+			// Insert the newly created page into the tree structure.
+			// This involves fixing the linkages.
 			//
-			
 			parentPage->InsertIndexRow(splitVal+1, newLeafPage->GetPageId());
 			newLeafPage->SetPrevPageId(page->GetPageId());
 			page->SetNextPageId(newLeafPage->GetPageId());
 		}
 	}
 
+	// Given a index page, find the child page for the given value.
+	//
 	Page* BTree::FindChildPage(Page* page, Value val)
 	{
 		PageId childPageId = page->GetIndexRow(0)->pageID;
@@ -113,8 +136,12 @@ traverse:
 		return GetGlobalBufferPool()->FindPage(childPageId);
 	}
 
+	// Transfer rows from one page to another by choosing a split point.
+	//
 	Value BTree::TransferRows(Page* leftPage, Page* rightPage)
 	{
+		// This implementation chooses mid-point for split. Other points can be chosen.
+		//
 		unsigned int splitPoint = leftPage->GetSlotCount()/2;
 		Value splitVal = leftPage->GetRow(splitPoint);
 
@@ -126,6 +153,8 @@ traverse:
 			rightPage->InsertRow(slotVal);
 		}
 
+		// Set the number of rows on the old page.
+		//
 		leftPage->SetSlotCount(splitPoint+1);
 
 		return splitVal;
@@ -177,10 +206,15 @@ traverse:
 		Value slotVal = -1;
 
 nextPage:
+		// Provide the next row on the page if we're not at the end of it.
+		//
 		if (*slot < page->GetSlotCount())
 		{
 			slotVal = page->GetRow(*slot);
+			(*slot)++;
 		}
+		// Move to the next leaf page.
+		//
 		else if (page->GetNextPageId() != 0)
 		{
 			page = GetGlobalBufferPool()->FindPage(page->GetNextPageId());
@@ -191,38 +225,5 @@ nextPage:
 		}
 		
 		return slotVal;
-	}
-
-	// Initialize a session with the BTree.
-	//
-	BTreeSession::BTreeSession(BTree* btree)
-	{
-		m_btree = btree;
-	}
-
-	// Open the session and collect the first key.
-	//
-	void BTreeSession::Open()
-	{
-		m_currentPageId = m_btree->GetFirstLeafPage()->GetPageId();
-		m_currentSlot = 0;
-	}
-
-	// Get the next row of the tree in the session.
-	//
-	bool BTreeSession::GetRow(Value* rgvals)
-	{
-		Value nextVal = -1;
-
-		nextVal = m_btree->GetRow(&m_currentPageId, &m_currentSlot);
-		m_currentSlot++;
-
-		if (nextVal == -1)
-		{
-			return false;
-		}
-
-		rgvals[0] = nextVal;
-		return true;
 	}
 }

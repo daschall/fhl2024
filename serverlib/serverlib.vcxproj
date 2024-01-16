@@ -149,6 +149,7 @@
     <ClInclude Include="queryprocessing\operators.h" />
     <ClInclude Include="storeng\page.h" />
     <ClInclude Include="storeng\btree.h" />
+	<ClInclude Include="storeng\btreesession.h" />
 	<ClInclude Include="storeng\buffer.h" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     <ClCompile Include="queryprocessing\sort.cpp" />
     <ClCompile Include="storeng\page.cpp" />
     <ClCompile Include="storeng\btree.cpp" />
+	<ClCompile Include="storeng\btreesession.cpp" />
 	<ClCompile Include="storeng\buffer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -8,6 +8,8 @@ namespace SE
 {
 	typedef unsigned int PageId;
 
+	// Record structure for index page.
+	//
 	struct IndexPagePayload
 	{
 		Value beginKey;
@@ -69,6 +71,8 @@ namespace SE
 		PageId m_nextPageId;
 	};
 
+	// This size can be modified. Use smaller sizes to trigger splits easily.
+	//
 	const int PAGE_SIZE = 8192;
 	const int PAGE_DATA_SIZE = PAGE_SIZE - sizeof(PageHeader);
 
@@ -85,7 +89,7 @@ namespace SE
 		{
 			// Zero out the page.
 			//
-			memset(m_data, 0, (unsigned int)(PAGE_DATA_SIZE));
+			memset(m_data, 0, PAGE_DATA_SIZE);
 		}
 
 		PageId GetPageId()

@@ -13,13 +13,6 @@ namespace SE
 	public:
 		BTree();
 
-		// Check if a page's level is the root level of this tree.
-		//
-		bool IsRootLevel(unsigned int level)
-		{
-			return (level == m_rootLevel);
-		}
-
 		// Implement accessors to get rows from the tree.
 		//
 		Page* GetFirstLeafPage();
@@ -29,13 +22,27 @@ namespace SE
 		//
 		void InsertRow(Value val);
 
+	private:
+
+		// Check if a page's level is the root level of this tree.
+		//
+		bool IsRootLevel(unsigned int level)
+		{
+			return (level == m_rootLevel);
+		}
+
+		// Split the page that would contain the Value val.
+		//
 		void Split(Value val);
 
+		// Transfer the rows from one page to another during split.
+		//
 		Value TransferRows(Page* leftPage, Page* rightPage);
 
+		// Find the child page within an internal page during traversal.
+		//
 		Page* FindChildPage(Page* page, Value val);
 
-	private:
 		// Find the page into which a scan or insert needs to go.
 		//
 		Page* Position(Value val, bool forInsert);
@@ -44,29 +51,5 @@ namespace SE
 		//
 		unsigned int m_rootPageID;
 		unsigned int m_rootLevel;
-	};
-
-	// A session operates on an index and stores progress of a scan.
-	//
-	class BTreeSession: public IStorage
-	{
-	public:
-		BTreeSession(BTree* btree);
-
-		// Implement storage interfaces for an index.
-		//
-		void Open();
-		bool GetRow(Value* val);
-		void Close()
-		{
-
-		}
-	private:
-
-		// Store progress of the scan.
-		//
-		PageId m_currentPageId;
-		unsigned int m_currentSlot;
-		BTree* m_btree;
 	};
 }

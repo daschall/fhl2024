@@ -7,4 +7,4 @@
 #include "gtest/gtest.h"
 
 #include "queryprocessing/operators.h"
-#include "storeng/btree.h"
+#include "storeng/btreesession.h"
