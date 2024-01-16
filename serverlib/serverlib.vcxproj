@@ -143,11 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="common\value.h" />
-    <ClInclude Include="interfaces\btree.h" />
-    <ClInclude Include="interfaces\btreesession.h" />
     <ClInclude Include="interfaces\iexpression.h" />
     <ClInclude Include="interfaces\ioperator.h" />
+    <ClInclude Include="interfaces\istorage.h" />
     <ClInclude Include="queryprocessing\operators.h" />
+    <ClInclude Include="storeng\btree.h" />
+    <ClInclude Include="storeng\btreesession.h" />
     <ClInclude Include="storeng\buffer.h" />
     <ClInclude Include="storeng\page.h" />
   </ItemGroup>

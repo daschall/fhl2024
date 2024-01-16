@@ -2,7 +2,7 @@
 
 #include "interfaces/ioperator.h"
 #include "interfaces/iexpression.h"
-#include "interfaces/btreesession.h"
+#include "interfaces/istorage.h"
 
 #include <deque>
 
@@ -37,14 +37,14 @@ namespace Qp
 	class BTreeScanner : public IOperator
 	{
 	public:
-		BTreeScanner(SE::BTreeSession* storage);
+		BTreeScanner(SE::IStorage* storage);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
 		void Close() override;
 
 	private:
-		SE::BTreeSession * m_storage;
+		SE::IStorage * m_storage;
 	};
 
 

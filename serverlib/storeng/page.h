@@ -3,7 +3,7 @@
 #include <map>
 #include <assert.h>
 #include "common/value.h"
-#include "interfaces//btreesession.h"
+#include "btreesession.h"
 
 namespace SE
 {

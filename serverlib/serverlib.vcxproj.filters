@@ -44,14 +44,17 @@
     <ClInclude Include="storeng\page.h">
       <Filter>Header Files\storeng</Filter>
     </ClInclude>
-    <ClInclude Include="interfaces\btreesession.h">
-      <Filter>Header Files\interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="interfaces\btree.h">
-      <Filter>Header Files\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="storeng\buffer.h">
       <Filter>Header Files\storeng</Filter>
+    </ClInclude>
+    <ClInclude Include="storeng\btree.h">
+      <Filter>Header Files\storeng</Filter>
+    </ClInclude>
+    <ClInclude Include="storeng\btreesession.h">
+      <Filter>Header Files\storeng</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces\istorage.h">
+      <Filter>Header Files\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
