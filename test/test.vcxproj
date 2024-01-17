@@ -100,6 +100,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="queries\setup.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="operators\btreescanner.cpp" />
@@ -115,7 +116,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="queries\queries1.cpp" />
+    <ClCompile Include="operators\top.cpp" />
+    <ClCompile Include="queries\query1.cpp" />
+    <ClCompile Include="queries\query3.cpp" />
+    <ClCompile Include="queries\query2.cpp" />
+    <ClCompile Include="queries\query4.cpp" />
+    <ClCompile Include="queries\query5.cpp" />
+    <ClCompile Include="queries\query6.cpp" />
+    <ClCompile Include="queries\query7.cpp" />
+    <ClCompile Include="queries\query8.cpp" />
+    <ClCompile Include="queries\setup.cpp" />
+    <ClCompile Include="queries\setup_tests.cpp" />
     <ClCompile Include="storeng\btree.cpp" />
     <ClCompile Include="functional\e2e.cpp" />
   </ItemGroup>

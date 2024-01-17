@@ -74,6 +74,9 @@
     <ClInclude Include="queryprocessing\join.h">
       <Filter>Header Files\queryprocessing</Filter>
     </ClInclude>
+    <ClInclude Include="queryprocessing\top.h">
+      <Filter>Header Files\queryprocessing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="queryprocessing\aggregate.cpp">
@@ -107,6 +110,9 @@
       <Filter>Source Files\queryprocessing</Filter>
     </ClCompile>
     <ClCompile Include="queryprocessing\btreescanner.cpp">
+      <Filter>Source Files\queryprocessing</Filter>
+    </ClCompile>
+    <ClCompile Include="queryprocessing\top.cpp">
       <Filter>Source Files\queryprocessing</Filter>
     </ClCompile>
   </ItemGroup>

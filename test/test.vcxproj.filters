@@ -27,12 +27,45 @@
     <ClCompile Include="operators\btreescanner.cpp">
       <Filter>operators</Filter>
     </ClCompile>
-    <ClCompile Include="queries\queries1.cpp">
+    <ClCompile Include="queries\query1.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\setup.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\setup_tests.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="operators\top.cpp">
+      <Filter>operators</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query3.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query2.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query4.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query5.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query6.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query7.cpp">
+      <Filter>queries</Filter>
+    </ClCompile>
+    <ClCompile Include="queries\query8.cpp">
       <Filter>queries</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="queries\setup.h">
+      <Filter>queries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,12 +5,12 @@
 
 namespace Qp
 {
-	// This operator calls an expression on every row received from its child.
+	// This operator only returns the first N rows.
 	//
-	class Project : public IOperator
+	class Top : public IOperator
 	{
 	public:
-		Project(IOperator* child, ProjectExpression expr);
+		Top(IOperator* child, unsigned int N);
 
 		void Open() override;
 		bool GetRow(Value* rgvals) override;
@@ -18,6 +18,7 @@ namespace Qp
 
 	private:
 		IOperator* child;
-		ProjectExpression expr;
+		unsigned int N;
+		unsigned int rowCount;
 	};
 }

@@ -153,6 +153,7 @@
     <ClInclude Include="queryprocessing\join.h" />
     <ClInclude Include="queryprocessing\project.h" />
     <ClInclude Include="queryprocessing\sort.h" />
+    <ClInclude Include="queryprocessing\top.h" />
     <ClInclude Include="storeng\btree.h" />
     <ClInclude Include="storeng\btreesession.h" />
     <ClInclude Include="storeng\buffer.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="queryprocessing\join.cpp" />
     <ClCompile Include="queryprocessing\project.cpp" />
     <ClCompile Include="queryprocessing\sort.cpp" />
+    <ClCompile Include="queryprocessing\top.cpp" />
     <ClCompile Include="storeng\page.cpp" />
     <ClCompile Include="storeng\btree.cpp" />
     <ClCompile Include="storeng\btreesession.cpp" />
