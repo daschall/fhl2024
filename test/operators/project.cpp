@@ -19,14 +19,14 @@ TEST(QpTestSuiteProject, Project1)
 		});
 	Value numRows = 0;
 
-	project.Open();
-	while (project.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(numRows, rgvals[0]);
-		EXPECT_EQ(numRows, rgvals[1]);
-	}
-	project.Close();
+	ExecuteQuery(&project,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_EQ(numRows, rgvals[0]);
+			EXPECT_EQ(numRows, rgvals[1]);
+		});
 
 	EXPECT_EQ(10, numRows);
 }

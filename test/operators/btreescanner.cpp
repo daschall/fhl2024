@@ -27,26 +27,26 @@ TEST(QpTestSuiteBTreeScanner, ReadAllRows)
 
 	Value numRows = 0;
 
-	scanner.Open();
-	while (scanner.GetRow(rgvals))
-	{
-		EXPECT_EQ(numRows, rgvals[0]);
-		++numRows;
-	}
-	scanner.Close();
+	ExecuteQuery(&scanner,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			EXPECT_EQ(numRows, rgvals[0]);
+			++numRows;
+		});
 
 	EXPECT_EQ(totalRows, numRows);
 
 	// If we re-open the scan, it should return the same result again.
 	//
 	numRows = 0;
-	scanner.Open();
-	while (scanner.GetRow(rgvals))
-	{
-		EXPECT_EQ(numRows, rgvals[0]);
-		++numRows;
-	}
-	scanner.Close();
+	ExecuteQuery(&scanner,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			EXPECT_EQ(numRows, rgvals[0]);
+			++numRows;
+		});
 
 	EXPECT_EQ(totalRows, numRows);
 }

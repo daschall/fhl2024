@@ -22,16 +22,16 @@ TEST(QpTestSuiteSort, SortDescending)
 	Value numRows = 0;
 	Value lastRow = 999;
 
-	sort.Open();
-	while (sort.GetRow(rgvals))
-	{
-		// next row should be <= last row
-		//
-		EXPECT_LE(rgvals[0], lastRow);
-		lastRow = rgvals[0];
-		++numRows;
-	}
-	sort.Close();
+	ExecuteQuery(&sort,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			// next row should be <= last row
+			//
+			EXPECT_LE(rgvals[0], lastRow);
+			lastRow = rgvals[0];
+			++numRows;
+		});
 	
 	EXPECT_EQ(300, numRows);
 }
@@ -54,16 +54,16 @@ TEST(QpTestSuiteSort, SortAscending)
 	Value numRows = 0;
 	Value lastRow = 0;
 
-	sort.Open();
-	while (sort.GetRow(rgvals))
-	{
-		// next row should be >= last row
-		//
-		EXPECT_GE(rgvals[0], lastRow);
-		lastRow = rgvals[0];
-		++numRows;
-	}
-	sort.Close();
+	ExecuteQuery(&sort,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			// next row should be >= last row
+			//
+			EXPECT_GE(rgvals[0], lastRow);
+			lastRow = rgvals[0];
+			++numRows;
+		});
 
 	EXPECT_EQ(300, numRows);
 }

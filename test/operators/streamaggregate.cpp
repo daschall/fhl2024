@@ -30,17 +30,18 @@ TEST(QpTestSuiteStreamAggregate, StreamAggSumAndCount)
 
 	Value numRows = 0;
 
-	agg.Open();
-	while (agg.GetRow(rgvals))
-	{
-		++numRows;
 
-		// Every group should have a sum of 10 * value and a count of 10 rows.
-		//
-		EXPECT_EQ(numRows * 10, rgvals[0]);
-		EXPECT_EQ(10, rgvals[1]);
-	}
-	agg.Close();
+	ExecuteQuery(&agg,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+
+			// Every group should have a sum of 10 * value and a count of 10 rows.
+			//
+			EXPECT_EQ(numRows * 10, rgvals[0]);
+			EXPECT_EQ(10, rgvals[1]);
+		});
 	
 	EXPECT_EQ(10, numRows);
 }

@@ -19,14 +19,15 @@ TEST(QpTestSuiteJoin, JoinSimple)
 
 	Value numRows = 0;
 
-	join.Open();
-	while (join.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(numRows, rgvals[0]);
-		EXPECT_EQ(numRows, rgvals[1]);
-	}
-	join.Close();
+	ExecuteQuery(&join,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_EQ(numRows, rgvals[0]);
+			EXPECT_EQ(numRows, rgvals[1]);
+		});
+
 	
 	EXPECT_EQ(10, numRows);
 }
@@ -45,16 +46,17 @@ TEST(QpTestSuiteJoin, JoinAddtlColumns)
 
 	Value numRows = 0;
 
-	join.Open();
-	while (join.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(numRows, rgvals[0]);
-		EXPECT_EQ(numRows, rgvals[2]);
-		EXPECT_EQ(111, rgvals[1]);
-		EXPECT_EQ(333, rgvals[3]);
-	}
-	join.Close();
+
+	ExecuteQuery(&join,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_EQ(numRows, rgvals[0]);
+			EXPECT_EQ(numRows, rgvals[2]);
+			EXPECT_EQ(111, rgvals[1]);
+			EXPECT_EQ(333, rgvals[3]);
+		});
 
 	EXPECT_EQ(10, numRows);
 }
@@ -71,13 +73,13 @@ TEST(QpTestSuiteJoin, JoinNePredicate)
 
 	Value numRows = 0;
 
-	join.Open();
-	while (join.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_NE(rgvals[0], rgvals[1]);
-	}
-	join.Close();
+	ExecuteQuery(&join,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_NE(rgvals[0], rgvals[1]);
+		});
 
 	EXPECT_EQ(90, numRows);
 }
@@ -94,12 +96,13 @@ TEST(QpTestSuiteJoin, JoinCrossProduct)
 
 	Value numRows = 0;
 
-	join.Open();
-	while (join.GetRow(rgvals))
-	{
-		++numRows;
-	}
-	join.Close();
+	ExecuteQuery(&join,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+		});
+
 
 	EXPECT_EQ(100, numRows);
 }
@@ -116,13 +119,13 @@ TEST(QpTestSuiteJoin, JoinOnIdenticalValues)
 
 	Value numRows = 0;
 
-	join.Open();
-	while (join.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(rgvals[0], rgvals[1]);
-	}
-	join.Close();
+	ExecuteQuery(&join,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_EQ(rgvals[0], rgvals[1]);
+		});
 
 	EXPECT_EQ(40, numRows);
 }

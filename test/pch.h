@@ -19,3 +19,10 @@
 #include "queryprocessing/join.h"
 #include "queryprocessing/project.h"
 #include "queryprocessing/sort.h"
+
+
+// Executes a query and runs the expression for every row returned.
+// You need to pass an adequately sized Value* array.
+// The expression can be anything, it can print the rows, it can count, it can have other side effects.
+//
+void ExecuteQuery(Qp::IOperator *root, Value *rgvals, ProjectExpression expression = nullptr);

@@ -15,13 +15,13 @@ TEST(QpTestSuiteFilter, FilterEq5)
 
 	Value numRows = 0;
 
-	filter.Open();
-	while (filter.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(5, rgvals[0]);
-	}
-	filter.Close();
+	ExecuteQuery(&filter,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			EXPECT_EQ(5, rgvals[0]);
+			++numRows;
+		});
 
 	EXPECT_EQ(1, numRows);
 }
@@ -38,13 +38,13 @@ TEST(QpTestSuiteFilter, FilterGt5)
 
 	Value numRows = 0;
 
-	filter.Open();
-	while (filter.GetRow(rgvals))
-	{
-		++numRows;
-		EXPECT_EQ(5 + numRows, rgvals[0]);
-	}
-	filter.Close();
+	ExecuteQuery(&filter,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			++numRows;
+			EXPECT_EQ(5 + numRows, rgvals[0]);
+		});
 
 	EXPECT_EQ(5, numRows);
 }
@@ -60,12 +60,13 @@ TEST(QpTestSuiteFilter, FilterNoRows)
 
 	Value numRows = 0;
 
-	filter.Open();
-	while (filter.GetRow(rgvals))
-	{
-		++numRows;
-	}
-	filter.Close();
+	ExecuteQuery(&filter,
+		rgvals,
+		[&](Value *rgvals)
+		{
+			// Nothing to validate here.
+			//
+		});
 
 	EXPECT_EQ(0, numRows);
 }
