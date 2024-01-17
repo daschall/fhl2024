@@ -5,7 +5,6 @@
     <ClCompile Include="storeng\btree.cpp">
       <Filter>storeng</Filter>
     </ClCompile>
-    <ClCompile Include="functional\e2e.cpp" />
     <ClCompile Include="operators\filter.cpp">
       <Filter>operators</Filter>
     </ClCompile>

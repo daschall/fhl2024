@@ -1,5 +1,5 @@
 //
-// setup.cpp
+// This file creates and populates test tables for the query challenges.
 //
 
 #include "pch.h"

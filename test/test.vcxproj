@@ -128,7 +128,6 @@
     <ClCompile Include="queries\setup.cpp" />
     <ClCompile Include="queries\setup_tests.cpp" />
     <ClCompile Include="storeng\btree.cpp" />
-    <ClCompile Include="functional\e2e.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
