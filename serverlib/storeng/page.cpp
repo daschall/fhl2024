@@ -4,11 +4,11 @@ namespace SE
 {
 	// Check if page has no more space left.
 	//
-	bool Page::IsFull()
+	bool Page::IsFull(unsigned int numCols)
 	{
 		if (IsLeafLevel())
 		{
-			return (sizeof(Value) * (m_slotCount + 1) >= PAGE_DATA_SIZE);
+			return (sizeof(Value) * (m_slotCount + 1) * numCols >= PAGE_DATA_SIZE);
 		}
 		else
 		{
@@ -19,25 +19,22 @@ namespace SE
 	// Insert a key on the page.
 	// It assumes rows are inserted in sorted order.
 	//
-	void Page::InsertRow(Value val)
+	void Page::InsertRow(Value *val, unsigned int numCols)
 	{
-		assert (IsLeafLevel());
-
-		// Page should not be full.
-		//
-		if (sizeof(Value) * (m_slotCount + 1) >= PAGE_DATA_SIZE)
-		{
-			assert(0);
-		}
+		assert(IsLeafLevel());
 
 		if (m_slotCount > 0)
 		{
-			Value prevVal = *((Value*)(m_data)+m_slotCount-1);
-			assert(val > prevVal);
+			Value *prevVal = (Value *) ((m_data) +((m_slotCount - 1) * sizeof(Value) * numCols));
+			assert(val[0] > prevVal[0]);
 		}
-		
 
-		*((Value*)((m_data)+(m_slotCount*sizeof(Value)))) = val;
+		Value *newVal = (Value *) ((m_data) +(m_slotCount * sizeof(Value) * numCols));
+
+		for (unsigned int i = 0; i < numCols; i++)
+		{
+			newVal[i] = val[i];
+		}
 
 		m_slotCount++;
 	}
@@ -46,7 +43,7 @@ namespace SE
 	{
 		assert(!IsLeafLevel());
 
-		IndexPagePayload* newRecord = (IndexPagePayload *)(m_data + (m_slotCount * sizeof(IndexPagePayload)));
+		IndexPagePayload *newRecord = (IndexPagePayload *) (m_data + (m_slotCount * sizeof(IndexPagePayload)));
 
 		newRecord->beginKey = beginVal;
 		newRecord->pageID = pageId;
@@ -56,24 +53,17 @@ namespace SE
 
 	// Get the row on the page given a slot.
 	//
-	Value Page::GetRow(unsigned int slot)
+	Value *Page::GetRow(unsigned int slot, unsigned int numCols)
 	{
-		return *((Value*)((m_data)+(slot*sizeof(Value))));
+		return (Value *) ((m_data) +(slot * sizeof(Value) * numCols));
 	}
 
 	// Get index row payload.
 	//
-	IndexPagePayload* Page::GetIndexRow(unsigned int slot)
+	IndexPagePayload *Page::GetIndexRow(unsigned int slot)
 	{
 		assert(!IsLeafLevel());
 
-		return (IndexPagePayload*)(m_data + (slot * sizeof(IndexPagePayload)));
-	}
-
-	// Get the last key value on the page. This helps with positioning.
-	//
-	Value Page::GetLastRow()
-	{
-		return *((Value*)((m_data)+((m_slotCount -1) * sizeof(Value))));
+		return (IndexPagePayload *) (m_data + (slot * sizeof(IndexPagePayload)));
 	}
 }

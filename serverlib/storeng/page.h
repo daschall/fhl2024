@@ -72,7 +72,7 @@ namespace SE
 
 	// This size can be modified. Use smaller sizes to trigger splits easily.
 	//
-	const int PAGE_SIZE = 8192;
+	const int PAGE_SIZE = 500;
 	const int PAGE_DATA_SIZE = PAGE_SIZE - sizeof(PageHeader);
 
 	// Structure of a page includes the header and the data section.
@@ -108,13 +108,11 @@ namespace SE
 
 		// Page interfaces to read/write rows.
 		//
-		Value GetRow(unsigned int slot);
-		IndexPagePayload* GetIndexRow(unsigned int slot);
-		Value GetLastRow();
-		void InsertRow(Value val);
+		Value *GetRow(unsigned int slot, unsigned int numCols);
+		IndexPagePayload *GetIndexRow(unsigned int slot);
+		void InsertRow(Value *val, unsigned int numCols);
 		void InsertIndexRow(Value beginVal, PageId pageId);
-
-		bool IsFull();
+		bool IsFull(unsigned int numCols);
 
 	private:
 		unsigned char m_data[PAGE_DATA_SIZE];

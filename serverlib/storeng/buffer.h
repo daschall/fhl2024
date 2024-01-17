@@ -15,15 +15,15 @@ namespace SE
 			m_nextPageID(1)
 		{}
 
-		Page* GetNewPage(unsigned int level);
-		Page* FindPage(PageId pageID);
+		Page *GetNewPage(unsigned int level);
+		Page *FindPage(PageId pageID);
 
 	private:
 		PageId m_nextPageID;
-		std::map<int, Page*> m_pages;
+		std::map<int, Page *> m_pages;
 	};
 
 	// Singleton buffer pool.
 	//
-	BufferPool* GetGlobalBufferPool();
+	BufferPool *GetGlobalBufferPool();
 }

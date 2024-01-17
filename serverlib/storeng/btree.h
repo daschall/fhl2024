@@ -14,15 +14,22 @@ namespace SE
 	{
 	public:
 		BTree();
+		BTree(unsigned int numCols);
 
 		// Implement accessors to get rows from the tree.
 		//
-		Page* GetFirstLeafPage();
-		Value GetRow(PageId* pageId, unsigned int* slot);
+		Page *GetFirstLeafPage();
+		Value *GetRow(PageId *pageId, unsigned int *slot);
 
 		// Insert rows into the tree.
 		//
 		void InsertRow(Value val);
+		void InsertRow(Value *val);
+
+		unsigned int GetNumCols()
+		{
+			return m_numCols;
+		}
 
 	private:
 
@@ -39,19 +46,24 @@ namespace SE
 
 		// Transfer the rows from one page to another during split.
 		//
-		Value TransferRows(Page* leftPage, Page* rightPage);
+		Value TransferRows(Page *leftPage, Page *rightPage);
+		Value TransferIndexRows(Page *leftPage, Page *rightPage);
 
 		// Find the child page within an internal page during traversal.
 		//
-		Page* FindChildPage(Page* page, Value val);
+		Page *FindChildPage(Page *page, Value val);
 
 		// Find the page into which a scan or insert needs to go.
 		//
-		Page* Position(Value val, bool forInsert);
+		Page *Position(Value val, bool forInsert);
 
 		// Metadata about the BTree which help traverse the tree.
 		//
 		unsigned int m_rootPageID;
 		unsigned int m_rootLevel;
+
+		// Number of 'Value' columns present in each row.
+		//
+		unsigned int m_numCols;
 	};
 }

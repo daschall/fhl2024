@@ -12,12 +12,12 @@ namespace SE
 	class BTreeSession : public IStorage
 	{
 	public:
-		BTreeSession(BTree* btree);
+		BTreeSession(BTree *btree);
 
 		// Implement storage interfaces for an index.
 		//
 		void Open() override;
-		bool GetRow(Value* val)override;
+		bool GetRow(Value *val)override;
 		void Close() override;
 
 	private:
@@ -26,6 +26,6 @@ namespace SE
 		//
 		PageId m_currentPageId;
 		unsigned int m_currentSlot;
-		BTree* m_btree;
+		BTree *m_btree;
 	};
 }

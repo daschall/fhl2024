@@ -26,15 +26,19 @@ namespace SE
 	//
 	bool BTreeSession::GetRow(Value *rgvals)
 	{
-		Value nextVal = m_btree->GetRow(&m_currentPageId, &m_currentSlot);
+		Value *newVal = m_btree->GetRow(&m_currentPageId, &m_currentSlot);
 
-		if (nextVal == -1)
+		if (newVal != nullptr)
 		{
-			return false;
+			for (unsigned int i = 0; i < m_btree->GetNumCols(); i++)
+			{
+				rgvals[i] = newVal[i];
+			}
+
+			return true;
 		}
 
-		rgvals[0] = nextVal;
-		return true;
+		return false;
 	}
 
 	// Close the session and release resources.
