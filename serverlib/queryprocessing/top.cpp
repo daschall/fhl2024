@@ -19,15 +19,7 @@ namespace Qp
 
 	bool Top::GetRow(Value* rgvals)
 	{
-		if (rowCount >= N)
-		{
-			return false;
-		}
-
-		bool ret = child->GetRow(rgvals);
-		++rowCount;
-
-		return ret;
+		return false;
 	}
 
 	void Top::Close()

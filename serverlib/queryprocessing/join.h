@@ -29,8 +29,5 @@ namespace Qp
 		JoinExpression expr;
 		Value* lvals;
 		Value* rvals;
-
-		bool gotlrow;
-		bool ropen;
 	};
 }

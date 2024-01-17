@@ -15,18 +15,7 @@ namespace Qp
 
 	bool Filter::GetRow(Value* rgvals)
 	{
-		do
-		{
-			if (!child->GetRow(rgvals))
-			{
-				return false;
-			}
-
-			if (expr(rgvals))
-			{
-				return true;
-			}
-		} while (true);
+		return false;
 	}
 
 	void Filter::Close()

@@ -17,14 +17,7 @@ namespace Qp
 
 	bool Project::GetRow(Value* rgvals)
 	{
-		bool ret = child->GetRow(rgvals);
-
-		if (ret)
-		{
-			expr(rgvals);
-		}
-
-		return ret;
+		return false;
 	}
 
 	void Project::Close()

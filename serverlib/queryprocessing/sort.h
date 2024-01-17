@@ -24,6 +24,5 @@ namespace Qp
 		CompareExpression cmp;
 
 		std::deque<Value*> childRows;
-		bool firstGetRow;
 	};
 }

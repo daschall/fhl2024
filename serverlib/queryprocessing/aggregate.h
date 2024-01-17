@@ -24,7 +24,5 @@ namespace Qp
 		unsigned int nvals;
 		unsigned int groupByColumn;
 		AggregateExpression aggExpression;
-		bool pendingChildRow;
-		bool childDone;
 	};
 }
